@@ -1,5 +1,5 @@
 import numpy as np
-# from fractions import Fraction
+from fractions import Fraction
 class Matrika:
     def __init__(self, matrika):
         self.matrika = np.array(matrika)
@@ -33,12 +33,12 @@ class Matrika:
             novav=[]
             for element in vrstica:
                 k= skalar * element
-                # g=float(k)
-                # if g.is_integer():
-                novav.append(k)
-                # else:
-                #   ulomek=Fraction(skalar, element)
-                #   novav.append(ulomek)
+                g=float(k)
+                if g.is_integer():
+                  novav.append(k)
+                else:
+                  ulomek = Fraction(g).limit_denominator()
+                  novav.append(ulomek)
             nova.append(novav)
         return Matrika(nova)
     def det(self):
@@ -93,6 +93,14 @@ class Matrika:
                 print("Matrika ni obrnljiva")
         else:
             print("Matrika ni obrnljiva")
-
+# print inverz:
+# import fractions
+# np.set_printoptions(formatter={'all':lambda x: str(fractions.Fraction(x).limit_denominator())})
+#  print(k.matrika)
+    def sled(self):
+        sled=0
+        for i in range(self.st_vrstic):
+            sled+=self.matrika[i][i]
+        return sled 
                         
    
