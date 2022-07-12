@@ -1,5 +1,12 @@
-from model import Matrika
-import json
+from model import Stanje,Matrika
+import numpy as np
+
+IME_DATOTEKE = "1.stanje.json"
+try:
+    stanje = Stanje.preberi_iz_datoteke(IME_DATOTEKE)
+except FileNotFoundError:
+    stanje = Stanje(matrike=[])
+
 def preberi_stevilo():
     while True:
         vnos = input("> ")
@@ -21,45 +28,48 @@ def izberi_moznost(moznosti):
             print(f"Vnesti morate število med 1 in {len(moznosti)}.")
 
 def transponiraj_matriko(seznam):
-    zacetna=Matrika(seznam)
-    print(zacetna.matrika)
-    transponirana= zacetna.transponiraj()
-    print(transponirana.matrika)
-    return transponirana.matrika
 
-# def vnesi_matriko():
-#     seznam= input()
-#     matrika=Matrika(seznam)
-#     print(matrika.matrika)
-#     return matrika
-def je_matrika(seznam):
-    if isinstance(seznam, list):
-        for element in seznam:
-            if isinstance(element, list)==False:
-                return False
-        return True
-    else:
-        return False
+    transponirana= seznam.transponiraj()
+    niz=print(transponirana.matrika)
+    return niz
+
+def determinanta_od_matrike(seznam):
+    det=seznam.det()
+    rezultat= f"{det}"
+    print(rezultat)
+    return rezultat
+   
+
 
 def ponudi_moznosti(seznam):
     izbrana_operacija= izberi_moznost(
         [
-            (transponiraj_matriko, "transponiraj matriko")
-            # (determinanta_od_matrike, "izračunaj determinanto")
-            # (prirejenka_od_matrike, "izračunaj prirejenko matrike")
+            (transponiraj_matriko, "transponiraj matriko"),
+            (determinanta_od_matrike, "izračunaj determinanto"),
+            # (prirejenka_od_matrike, "izračunaj prirejenko matrike"),
             # (inverz_matrike, "izračunaj inverz matrike")
         ]
     )
     izbrana_operacija(seznam)
 
-def tekstovni_vmesnik():
-    vnos =input()
-    if vnos[0]=='[' and vnos.endswith(']'):
-        seznam = json.loads(vnos)
-        if je_matrika(seznam)==True:
-            ponudi_moznosti(seznam)
+def je_matrika_s_stevili(niz):
+    assert isinstance(niz, str)
+    for znak in niz:
+        if znak.isdigit()==False:
+            if znak!=';' and znak!=',' and znak!=' ':
+                return False
+    return True
+
+def dodaj_matriko():
+        print("Vnesi matriko")
+        vnos =input()
+        if je_matrika_s_stevili(vnos)==True:
+            seznam=np.matrix(vnos)
+            matrika=Matrika(seznam)
+            stanje.dodaj_matriko(matrika)
+            ponudi_moznosti(matrika)
         else:
-            print("To ni matrika")
-    else:
-        print("To ni matrika")
+            print("Vnesi stevila")
+
+
 
