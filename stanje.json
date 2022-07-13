@@ -1,0 +1,32 @@
+{
+    "matrike": [
+        {
+            "matrika": [
+                [
+                    1,
+                    2
+                ],
+                [
+                    3,
+                    4
+                ]
+            ],
+            "st_vrstic": 2,
+            "st_stolpcev": 2
+        },
+        {
+            "matrika": [
+                [
+                    2,
+                    4
+                ],
+                [
+                    6,
+                    8
+                ]
+            ],
+            "st_vrstic": 2,
+            "st_stolpcev": 2
+        }
+    ]
+}
