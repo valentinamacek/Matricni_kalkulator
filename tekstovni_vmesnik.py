@@ -1,7 +1,8 @@
 from model import Stanje,Matrika
 import numpy as np
+import fractions
 
-IME_DATOTEKE = "1.stanje.json"
+IME_DATOTEKE = "stanje.json"
 try:
     stanje = Stanje.preberi_iz_datoteke(IME_DATOTEKE)
 except FileNotFoundError:
@@ -30,24 +31,35 @@ def izberi_moznost(moznosti):
 def transponiraj_matriko(seznam):
     transponirana= seznam.transponiraj()
     stanje.dodaj_matriko(transponirana)
-    print(transponirana.matrika)
+    print(prikaz_Matrike(transponirana))
 
 def determinanta_od_matrike(seznam):
     det=seznam.det()
     rezultat= f"{det}"
     print(rezultat)
 
+def prirejenka_od_matrike(seznam):
+    prirejenka = seznam.prirejenka()
+    stanje.dodaj_matriko(prirejenka)
+    print(prikaz_Matrike(prirejenka))
+
+def inverz_matrike(seznam):
+    inverz = seznam.inverz()
+    stanje.dodaj_matriko(inverz)
+    np.set_printoptions(formatter={'all':lambda x: str(fractions.Fraction(x).limit_denominator())})
+    print(prikaz_Matrike(inverz))
+
 def sestej(matrika1, matrika2):
     assert isinstance(matrika1, Matrika) and isinstance(matrika2, Matrika)
     vsota= matrika1 + matrika2
     stanje.dodaj_matriko(vsota)
-    print(vsota.matrika)
+    print(prikaz_Matrike(vsota))
 
 def zmnozi(matrika1, matrika2):
     assert isinstance(matrika1, Matrika) and isinstance(matrika2, Matrika)
     produkt=matrika1*matrika2
     stanje.dodaj_matriko(produkt)
-    print(produkt.matrika)
+    print(prikaz_Matrike(produkt))
 
 def prikaz_Matrike(seznam):
     niz = f"{seznam.matrika}\n stevilo vrstic:{seznam.st_vrstic}\n stevilo stolpcev:{seznam.st_stolpcev}"
@@ -66,8 +78,8 @@ def moznosti_posz(seznam):
         [
             (transponiraj_matriko, "transponiraj matriko"),
             (determinanta_od_matrike, "izračunaj determinanto"),
-            # (prirejenka_od_matrike, "izračunaj prirejenko matrike"),
-            # (inverz_matrike, "izračunaj inverz matrike")
+            (prirejenka_od_matrike, "izračunaj prirejenko matrike"),
+            (inverz_matrike, "izračunaj inverz matrike"),
         ]
     )
     izbrana_operacija(seznam)
@@ -88,6 +100,7 @@ def je_matrika_s_stevili(niz):
             if znak!=';' and znak!=',' and znak!=' ':
                 return False
     return True
+
 def izberi_matriko(stanje):
     print("Izberi matriko:")
     return izberi_moznost(
@@ -96,6 +109,7 @@ def izberi_matriko(stanje):
             for matrika in stanje.matrike
         ]
     )
+
 def dodaj_matriko():
         print("Vnesi matriko")
         vnos =input()
@@ -110,20 +124,33 @@ def dodaj_matriko():
 def zacetni_pozdrav():
     print("Pozdravljeni v matričnem kalkulatorju")
 
+def zakljuci_izvajanje():
+    stanje.shrani_v_datoteko(IME_DATOTEKE)
+    print("Nasvidenje!")
+    exit()
+
 def ponudi_moznosti():
     if not stanje.matrike:
         dodaj_matriko()
-    elif len(stanje.matrike)==2:
-        matrika1=stanje.matrike[0]
-        matrika2=stanje.matrike[1]
-        moznosti_dveh(matrika1, matrika2)
-    elif len(stanje.matrike)==1:
-        matrika=stanje.matrike[0]
-        moznosti_posz(matrika)
     else:
-        matrika1 = izberi_matriko(stanje)
-        matrika2 = izberi_matriko(stanje)
-        moznosti_dveh(matrika1, matrika2)
+        izbrano_dejanje = izberi_moznost(
+            [
+                (dodaj_matriko, "dodaj matriko"),
+                (operacije_z_matriko, "izberi 1 matriko"),
+                (operacije_dveh_matrik, "izberi 2 matriki"),
+                (zakljuci_izvajanje, "izhod"),
+            ]
+        )
+        izbrano_dejanje()
+
+def operacije_z_matriko():
+    matrika = izberi_matriko(stanje)
+    moznosti_posz(matrika)
+
+def operacije_dveh_matrik():
+    matrika1 = izberi_matriko(stanje)
+    matrika2 = izberi_matriko(stanje)
+    moznosti_dveh(matrika1, matrika2)
 
 def tekstovni_vmesnik():
     zacetni_pozdrav()

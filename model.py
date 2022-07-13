@@ -39,7 +39,7 @@ class Stanje:
 
 class Matrika:
     def __init__(self, matrika):
-        self.matrika = np.array(matrika)
+        self.matrika = np.array(matrika, dtype='int64')
         self.st_vrstic = len(self.matrika)
         self.st_stolpcev = len(self.matrika[0])
 
@@ -67,6 +67,21 @@ class Matrika:
             return Matrika(nova)
         else:
             print("Prva matrika mora imeti toliko stolpcev kot ima druga matrika vrstic")
+    
+    def potenciraj(self, n):
+        if n>=0:
+            if self.st_stolpcev==self.st_vrstic:
+                k=n-1
+                potencirana = self
+                while k!=0:
+                    potencirana = potencirana * self
+                    k-=1
+                return potencirana
+            else:
+                print("Vnesi kvadratno matriko")
+        else:
+            print("Vnesi nenegativno stevilo")
+            
 
     def mnozenje_s_skalar(self, skalar):
         nova = []
@@ -74,12 +89,7 @@ class Matrika:
             novav = []
             for element in vrstica:
                 k = skalar * element
-                g = float(k)
-                if g.is_integer():
-                    novav.append(k)
-                else:
-                    ulomek = Fraction(g).limit_denominator()
-                    novav.append(ulomek)
+                novav.append(k)
             nova.append(novav)
         return Matrika(nova)
 
