@@ -1,7 +1,7 @@
 from model import Stanje,Matrika
 import numpy as np
 import fractions
-
+np.set_printoptions(formatter={'all':lambda x: str(fractions.Fraction(x).limit_denominator())})
 IME_DATOTEKE = "stanje.json"
 try:
     stanje = Stanje.preberi_iz_datoteke(IME_DATOTEKE)
@@ -46,7 +46,6 @@ def prirejenka_od_matrike(seznam):
 def inverz_matrike(seznam):
     inverz = seznam.inverz()
     stanje.dodaj_matriko(inverz)
-    np.set_printoptions(formatter={'all':lambda x: str(fractions.Fraction(x).limit_denominator())})
     print(prikaz_Matrike(inverz))
 
 def sestej(matrika1, matrika2):
@@ -117,7 +116,6 @@ def dodaj_matriko():
             seznam=np.matrix(vnos)
             matrika=Matrika(seznam)
             stanje.dodaj_matriko(matrika)
-            moznosti_posz(matrika)
         else:
             print("Vnesi stevila")
 

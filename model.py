@@ -39,7 +39,7 @@ class Stanje:
 
 class Matrika:
     def __init__(self, matrika):
-        self.matrika = np.array(matrika, dtype='int64')
+        self.matrika = np.array(matrika, dtype='float64')
         self.st_vrstic = len(self.matrika)
         self.st_stolpcev = len(self.matrika[0])
 
@@ -149,10 +149,6 @@ class Matrika:
                 print("Matrika ni obrnljiva")
         else:
             print("Matrika ni obrnljiva")
-# print inverz:
-# import fractions
-# np.set_printoptions(formatter={'all':lambda x: str(fractions.Fraction(x).limit_denominator())})
-#  print(k.matrika)
 
     def sled(self):
         sled = 0
