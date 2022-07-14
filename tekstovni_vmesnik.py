@@ -56,6 +56,24 @@ def inverz_matrike(seznam):
     print(prikaz_Matrike(inverz))
 
 
+def sled_matrike(seznam):
+    sled = seznam.sled()
+    rezultat = f"{sled}"
+    print(rezultat)
+
+
+def potenciraj_matriko(seznam, n):
+    potencirana = seznam.potenciraj(n)
+    stanje.dodaj_matriko(potencirana)
+    print(prikaz_Matrike(potencirana))
+
+
+def mnozenje_s_skalarjem(seznam, k):
+    produkt = seznam.mnozenje_s_skalar(k)
+    stanje.dodaj_matriko(produkt)
+    print(prikaz_Matrike(produkt))
+
+
 def sestej(matrika1, matrika2):
     assert isinstance(matrika1, Matrika) and isinstance(matrika2, Matrika)
     vsota = matrika1 + matrika2
@@ -85,16 +103,37 @@ def izpisi_trenutno_stanje():
 
 
 def moznosti_posz(seznam):
+
     izbrana_operacija = izberi_moznost(
         [
             (transponiraj_matriko, "transponiraj matriko"),
             (determinanta_od_matrike, "izračunaj determinanto"),
             (prirejenka_od_matrike, "izračunaj prirejenko matrike"),
             (inverz_matrike, "izračunaj inverz matrike"),
+            (sled_matrike, "izracunaj sled matrike"),
+            (potenciraj_matriko, "potenciraj matriko "),
+            (mnozenje_s_skalarjem, "pomnozi matriko s skalarjem"),
         ]
     )
-    izbrana_operacija(seznam)
-
+    if izbrana_operacija!=potenciraj_matriko and izbrana_operacija != mnozenje_s_skalarjem:
+        izbrana_operacija(seznam)
+    else:
+        if izbrana_operacija==potenciraj_matriko:
+            print("Vnesi željeno stopnjo")
+            n = input()
+            if n.isdigit():
+                izbrana_operacija(seznam , int(n))
+            else:
+                print("Vnesi celo stevilo")
+        else:
+            print("Vnesi željen skalar")
+            k= input()
+            try:
+                float(k)
+                izbrana_operacija(seznam, float(k))
+            except ValueError:
+                print("Vnesi stevilo")
+                   
 
 def moznosti_dveh(seznam1, seznam2):
     izbrana_operacija = izberi_moznost(
