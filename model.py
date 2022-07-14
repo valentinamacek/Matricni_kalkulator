@@ -1,5 +1,4 @@
 import numpy as np
-from fractions import Fraction
 import json
 
 
@@ -12,7 +11,7 @@ class Stanje:
 
     def v_slovar(self):
         return {
-            "matrike" : [matrika.v_slovar() for matrika in self.matrike],
+            "matrike": [matrika.v_slovar() for matrika in self.matrike],
         }
 
     @staticmethod
@@ -27,8 +26,8 @@ class Stanje:
 
     def shrani_v_datoteko(self, ime_datoteke):
         with open(ime_datoteke, "w") as dat:
-             slovar = self.v_slovar()
-             json.dump(slovar, dat, indent=4, ensure_ascii=False)
+            slovar = self.v_slovar()
+            json.dump(slovar, dat, indent=4, ensure_ascii=False)
 
     @staticmethod
     def preberi_iz_datoteke(ime_datoteke):
@@ -67,21 +66,20 @@ class Matrika:
             return Matrika(nova)
         else:
             print("Prva matrika mora imeti toliko stolpcev kot ima druga matrika vrstic")
-    
+
     def potenciraj(self, n):
-        if n>=0:
-            if self.st_stolpcev==self.st_vrstic:
-                k=n-1
+        if n >= 0:
+            if self.st_stolpcev == self.st_vrstic:
+                k = n-1
                 potencirana = self
-                while k!=0:
+                while k != 0:
                     potencirana = potencirana * self
-                    k-=1
+                    k -= 1
                 return potencirana
             else:
                 print("Vnesi kvadratno matriko")
         else:
             print("Vnesi nenegativno stevilo")
-            
 
     def mnozenje_s_skalar(self, skalar):
         nova = []
@@ -155,14 +153,15 @@ class Matrika:
         for i in range(self.st_vrstic):
             sled += self.matrika[i][i]
         return sled
-    
+
     def v_slovar(self):
         seznam = self.matrika.tolist()
         return {
-            "matrika" : seznam,
-            "st_vrstic" : self.st_vrstic,
-            "st_stolpcev" : self.st_stolpcev,
+            "matrika": seznam,
+            "st_vrstic": self.st_vrstic,
+            "st_stolpcev": self.st_stolpcev,
         }
+
     @staticmethod
     def iz_slovarja(slovar):
         return Matrika(slovar["matrika"])

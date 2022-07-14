@@ -83,6 +83,20 @@
             ],
             "st_vrstic": 2,
             "st_stolpcev": 2
+        },
+        {
+            "matrika": [
+                [
+                    -1.0,
+                    0.5
+                ],
+                [
+                    0.75,
+                    -0.25
+                ]
+            ],
+            "st_vrstic": 2,
+            "st_stolpcev": 2
         }
     ]
 }
