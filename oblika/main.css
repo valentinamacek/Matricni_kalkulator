@@ -1,0 +1,23 @@
+h1 {
+    color: darkred;
+    text-align: center;
+}
+.matrika {
+    position: relative;
+}
+.matrika:before, .matrika:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    border: 1px solid #000;
+    width: 6px;
+    height: 100%;
+}
+.matrika:before {
+    left: -6px;
+    border-right: 0;
+}
+.matrika:after {
+    right: -6px;
+    border-left: 0;
+}

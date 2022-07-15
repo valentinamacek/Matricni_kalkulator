@@ -161,7 +161,6 @@ class Matrika:
             "st_vrstic": self.st_vrstic,
             "st_stolpcev": self.st_stolpcev,
         }
-
     @staticmethod
     def iz_slovarja(slovar):
         return Matrika(slovar["matrika"])
