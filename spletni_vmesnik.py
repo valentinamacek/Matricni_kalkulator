@@ -14,6 +14,8 @@ def zacetna_stran():
         "zacetna_stran.tpl",
       matrike = stanje.matrike, spremeni_obliko=spremeni_obliko)
 
-
+@bottle.get("/oblika/<file>")
+def staticno_oblikovanje(file):
+    return bottle.static_file(file, root="oblika")
 
 bottle.run(debug=True, reloader=True)
