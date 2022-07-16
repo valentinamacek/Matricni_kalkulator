@@ -1,6 +1,6 @@
 import numpy as np
 import json
-
+import fractions
 
 class Stanje:
     def __init__(self, matrike):
@@ -164,3 +164,5 @@ class Matrika:
     @staticmethod
     def iz_slovarja(slovar):
         return Matrika(slovar["matrika"])
+def spremeni_obliko(x):
+    return  str(fractions.Fraction(x).limit_denominator())

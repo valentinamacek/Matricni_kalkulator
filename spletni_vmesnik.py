@@ -1,9 +1,6 @@
 import bottle
-from model import Stanje, Matrika
-import numpy as np
-import fractions
-np.set_printoptions(formatter={'all': lambda x: str(
-    fractions.Fraction(x).limit_denominator())})
+from model import Stanje, spremeni_obliko
+
 
 IME_DATOTEKE = "stanje.json"
 try:
@@ -15,7 +12,7 @@ except FileNotFoundError:
 def zacetna_stran():
      return bottle.template(
         "zacetna_stran.tpl",
-      matrike = stanje.matrike)
+      matrike = stanje.matrike, spremeni_obliko=spremeni_obliko)
 
 
 
