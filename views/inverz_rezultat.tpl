@@ -1,0 +1,20 @@
+%rebase('base.tpl')
+ <table class="matrika">                                     -1
+      % for vrstica in  matrika.spremeni_obliko_matrike(): 
+          <tr>
+          % for element in vrstica:
+          <td>    {{ element }}  </td>
+          % end
+          </tr>
+      % end
+      </table>
+=
+ <table class="matrika"> 
+      % for vrstica in  inverz.spremeni_obliko_matrike():
+          <tr>
+          % for element in vrstica:
+          <td>    {{ element }}  </td>
+          % end
+          </tr>
+      % end
+      </table>

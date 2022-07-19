@@ -1,7 +1,7 @@
-from model import Stanje, Matrika, spremeni_obliko
+from model import Stanje, Matrika
 import numpy as np
 import fractions
-np.set_printoptions(formatter={'all': lambda x: spremeni_obliko(x)})
+np.set_printoptions(formatter={'all': lambda x: str(fractions.Fraction(x).limit_denominator())})
 IME_DATOTEKE = "stanje.json"
 try:
     stanje = Stanje.preberi_iz_datoteke(IME_DATOTEKE)

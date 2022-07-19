@@ -68,9 +68,11 @@ class Matrika:
             print("Prva matrika mora imeti toliko stolpcev kot ima druga matrika vrstic")
 
     def potenciraj(self, n):
-        if n >= 0:
+        if n >= 0 and float(n).is_integer():
+            g=float(n)
+            c=int(g)
             if self.st_stolpcev == self.st_vrstic:
-                k = n-1
+                k = c-1
                 potencirana = self
                 while k != 0:
                     potencirana = potencirana * self
@@ -79,7 +81,7 @@ class Matrika:
             else:
                 print("Vnesi kvadratno matriko")
         else:
-            print("Vnesi nenegativno stevilo")
+            print("Vnesi nenegativno celo stevilo")
 
     def mnozenje_s_skalar(self, skalar):
         nova = []
@@ -164,5 +166,13 @@ class Matrika:
     @staticmethod
     def iz_slovarja(slovar):
         return Matrika(slovar["matrika"])
-def spremeni_obliko(x):
-    return  str(fractions.Fraction(x).limit_denominator())
+    
+    def spremeni_obliko_matrike(self):
+        nova=[]
+        for vrstica in self.matrika:
+            novav=[]
+            for element in vrstica:
+                nov= str(fractions.Fraction(element).limit_denominator())
+                novav.append(nov)
+            nova.append(novav)
+        return nova
