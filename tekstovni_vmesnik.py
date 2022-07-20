@@ -1,4 +1,4 @@
-from model import Stanje, Matrika
+from model import Stanje, Matrika, je_matrika_s_stevili
 import numpy as np
 import fractions
 np.set_printoptions(formatter={'all': lambda x: str(fractions.Fraction(x).limit_denominator())})
@@ -142,15 +142,6 @@ def moznosti_dveh(seznam1, seznam2):
         ]
     )
     izbrana_operacija(seznam1, seznam2)
-
-
-def je_matrika_s_stevili(niz):
-    assert isinstance(niz, str)
-    for znak in niz:
-        if znak.isdigit() == False:
-            if znak != ';' and znak != ',' and znak != ' ':
-                return False
-    return True
 
 
 def izberi_matriko(stanje):

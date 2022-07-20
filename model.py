@@ -2,12 +2,27 @@ import numpy as np
 import json
 import fractions
 
+def je_matrika_s_stevili(niz):
+    assert isinstance(niz, str)
+    try: 
+        np.matrix(niz)
+        return True
+    except ValueError:
+        return False
+    
+
 class Stanje:
     def __init__(self, matrike):
         self.matrike = matrike
 
     def dodaj_matriko(self, matrika):
         self.matrike.append(matrika)
+        
+
+    def preveri_podatke_nove_matrike(self, nova_matrika):
+        for matrika in self.matrike:
+            if matrika == nova_matrika:
+                return {"matrika": "Taka matrika je že v tvojem seznamu"}
 
     def v_slovar(self):
         return {
@@ -44,6 +59,9 @@ class Matrika:
 
     def transponiraj(self):
         return Matrika(self.matrika.transpose())
+    
+    def __eq__(self, other):
+        return np.array_equal(self.matrika, other.matrika)
 
     def __add__(self, other):
         if self.st_stolpcev == other.st_stolpcev and self.st_vrstic == other.st_vrstic:

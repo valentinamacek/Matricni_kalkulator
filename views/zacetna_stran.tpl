@@ -18,6 +18,7 @@
       </li>
     % end
     </ul>
+    <a href="/dodaj-matriko/">Dodaj matriko </a>
       Transponiraj:
       <form action="/transponiraj/" method="POST">
         <select name="matrike">

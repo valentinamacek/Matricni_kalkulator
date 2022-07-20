@@ -1,6 +1,6 @@
 import bottle
-from model import Stanje, Matrika
-
+from model import Stanje, Matrika, je_matrika_s_stevili
+import numpy as np
 
 IME_DATOTEKE = "stanje.json"
 try:
@@ -19,6 +19,29 @@ def zacetna_stran():
     return bottle.template(
         "zacetna_stran.tpl",
         matrike=stanje.matrike)
+
+@bottle.get("/dodaj-matriko/")
+def dodaj_matriko():
+    return  bottle.template("dodaj_matriko.tpl", napake={})
+
+@bottle.post("/dodaj-matriko/")
+def dodaj_matriko_post():
+    elementi=bottle.request.forms["matrika"]
+    if je_matrika_s_stevili(elementi):
+        seznam = np.matrix(elementi)
+        matrika = Matrika(seznam)
+        napake = stanje.preveri_podatke_nove_matrike(matrika)
+        if napake:
+            return bottle.template("dodaj_matriko.tpl", napake=napake)
+        else:
+            stanje.dodaj_matriko(matrika)
+            bottle.redirect("/")
+    else:
+        napake={}
+        napaka= "Matrični elementi morajo biti števila"
+        napake["matrika"]=napaka
+        return bottle.template("dodaj_matriko.tpl", napake=napake)
+
 
 
 @bottle.get("/transponiraj_rezultat/<id_matrike:int>/")
@@ -88,59 +111,59 @@ def sestej_rezultat(id_matrike1, id_matrike2):
 
 @bottle.post("/transponiraj/")
 def transponiraj():
-    id_matrike = bottle.request.forms.getunicode("matrike")
+    id_matrike = bottle.request.forms["matrike"]
     return bottle.redirect(f"/transponiraj_rezultat/{id_matrike}/")
 
 
 @bottle.post("/prirejenka/")
 def prirejenka():
-    id_matrike = bottle.request.forms.getunicode("matrike")
+    id_matrike = bottle.request.forms["matrike"]
     return bottle.redirect(f"/prirejenka_rezultat/{id_matrike}/")
 
 
 @bottle.post("/inverz/")
 def inverz():
-    id_matrike = bottle.request.forms.getunicode("matrike")
+    id_matrike = bottle.request.forms["matrike"]
     return bottle.redirect(f"/inverz_rezultat/{id_matrike}/")
 
 
 @bottle.post("/det/")
 def det():
-    id_matrike = bottle.request.forms.getunicode("matrike")
+    id_matrike = bottle.request.forms["matrike"] 
     return bottle.redirect(f"/det_rezultat/{id_matrike}/")
 
 
 @bottle.post("/sled/")
 def sled():
-    id_matrike = bottle.request.forms.getunicode("matrike")
+    id_matrike = bottle.request.forms["matrike"]
     return bottle.redirect(f"/sled_rezultat/{id_matrike}/")
 
 
 @bottle.post("/potenciraj/")
 def potenciraj():
-    id_matrike = bottle.request.forms.getunicode("matrike")
+    id_matrike = bottle.request.forms["matrike"]
     stopnja = bottle.request.forms["stopnja_potence"]
     return bottle.redirect(f"/potenciraj_rezultat/{id_matrike}/{stopnja}")
 
 
 @bottle.post("/mnozenje_s_skalar/")
 def mnozenje_s_skalar():
-    id_matrike = bottle.request.forms.getunicode("matrike")
+    id_matrike = bottle.request.forms["matrike"]
     skalar = bottle.request.forms["zeljen_skalar"]
     return bottle.redirect(f"/mnozenje_s_skalar_rezultat/{id_matrike}/{skalar}")
 
 
 @bottle.post("/zmnozi/")
 def zmnozi():
-    id_matrike1 = bottle.request.forms.getunicode("matrika1")
-    id_matrike2 = bottle.request.forms.getunicode("matrika2")
+    id_matrike1 = bottle.request.forms["matrika1"]
+    id_matrike2 = bottle.request.forms["matrika2"]
     return bottle.redirect(f"/zmnozi_rezultat/{id_matrike1}/{id_matrike2}")
 
 
 @bottle.post("/sestej/")
 def sestej():
-    id_matrike1 = bottle.request.forms.getunicode("matrika1")
-    id_matrike2 = bottle.request.forms.getunicode("matrika2")
+    id_matrike1 = bottle.request.forms["matrika1"]
+    id_matrike2 = bottle.request.forms["matrika2"]
     return bottle.redirect(f"/sestej_rezultat/{id_matrike1}/{id_matrike2}")
 
 
