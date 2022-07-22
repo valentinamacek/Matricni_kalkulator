@@ -24,7 +24,7 @@ def dodaj_matriko():
 def zacetna_stran():
     return bottle.template(
         "zacetna_stran.tpl",
-        matrike=stanje.matrike)
+        matrike=stanje.matrike, operacije=OPERACIJE)
 
 @bottle.post("/dodaj-matriko/")
 def dodaj_matriko_post():
