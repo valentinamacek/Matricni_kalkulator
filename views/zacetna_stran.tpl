@@ -32,22 +32,24 @@
         <option value="{{ id_matrike }}">Matrika {{id_matrike + 1}}</option>
         %end
         </select>
-        <div class="btn-group-vertical">
-          <button type="button" name="operacija" value="transponiraj" class="btn btn-info" >{{"transponiraj".capitalize()}}</button>
-          <button type="button" name="operacija" value="prirejenka" class="btn btn-info" >Prirejenka</button>
-          <button type="button" name="operacija" value="inverz" class="btn btn-info" >Inverz</button>
-          <button type="button" name="operacija" value="det" class="btn btn-info" >Determinanta</button>
-          <button type="button" name="operacija" value="sled" class="btn btn-info" >Sled</button>
-          <div class="input-group">
-          <input type="text"  name="stopnja_potence"  placeholder="Stopnja potence" size="2"  >
-          <button type="button" class="btn btn-info btn-md" name="operacija" value="potenciraj">Potenciraj</button>
-          </div>
-          <div class="input-group">
-          <input type="text" name="zeljen_skalar"  placeholder="Skalar"  size="2">  
-          <button type="button" class="btn btn-info btn-md" name="operacija" value="mnozenje_s_skalar">
-          Pomnoži
-          </button>
-          </div>
+        <div class="btn-group">
+        % for operacija in operacije:
+          %if operacija == "potenciraj":
+            <div class="input-group">
+            <input type="text"  name="stopnja_potence"  placeholder="Stopnja potence" size="2"  >
+            <button type="submit" class="btn btn-info btn-md" name="operacija" value="potenciraj">Potenciraj</button>
+            </div>
+          %elif operacija=="mnozenje_s_skalar":
+            <div class="input-group">
+            <input type="text" name="zeljen_skalar"  placeholder="Skalar"  size="2">  
+            <button type="submit" class="btn btn-info btn-md" name="operacija" value="mnozenje_s_skalar">
+            Pomnoži
+            </button>
+            </div>
+          %else:
+            <button type="submit" name="operacija" value= {{ operacija }} class="btn btn-info" >{{operacija.capitalize()}}</button>
+          %end
+        % end
         </div>
       </form>  
       <form action="/operacija-dveh/" method="POST">
@@ -61,6 +63,8 @@
         <option value="{{ id_matrike }}">Matrika {{id_matrike + 1}}</option>
         %end
         </select>
-        <button type="submit" name="operacija" value="sestej">Seštej</button>
-        <button type="submit" name="operacija" value="zmnozi">Zmnoži </button>
+        <div class="btn-group">
+        <button type="submit" name="operacija" value="sestej" class="btn btn-info">Seštej</button>
+        <button type="submit" name="operacija" value="zmnozi"class="btn btn-info">Zmnoži </button>
+        </div>
       </form>
