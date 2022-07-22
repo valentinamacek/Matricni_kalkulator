@@ -1,3 +1,4 @@
+from ssl import OP_ALL
 import bottle
 from model import Stanje, Matrika, je_matrika_s_stevili
 import numpy as np
@@ -14,15 +15,16 @@ def staticno_oblikovanje(file):
     return bottle.static_file(file, root="oblika")
 
 
+@bottle.get("/dodaj-matriko/")
+def dodaj_matriko():
+    return  bottle.template("dodaj_matriko.tpl", napake={})
+
+
 @bottle.get("/")
 def zacetna_stran():
     return bottle.template(
         "zacetna_stran.tpl",
         matrike=stanje.matrike)
-
-@bottle.get("/dodaj-matriko/")
-def dodaj_matriko():
-    return  bottle.template("dodaj_matriko.tpl", napake={})
 
 @bottle.post("/dodaj-matriko/")
 def dodaj_matriko_post():
@@ -109,62 +111,30 @@ def sestej_rezultat(id_matrike1, id_matrike2):
     return bottle.template("sestej_rezultat.tpl", matrika1=matrika1, matrika2=matrika2, vsota=vsota)
 
 
-@bottle.post("/transponiraj/")
-def transponiraj():
-    id_matrike = bottle.request.forms["matrike"]
-    return bottle.redirect(f"/transponiraj_rezultat/{id_matrike}/")
-
-
-@bottle.post("/prirejenka/")
-def prirejenka():
-    id_matrike = bottle.request.forms["matrike"]
-    return bottle.redirect(f"/prirejenka_rezultat/{id_matrike}/")
-
-
-@bottle.post("/inverz/")
-def inverz():
-    id_matrike = bottle.request.forms["matrike"]
-    return bottle.redirect(f"/inverz_rezultat/{id_matrike}/")
-
-
-@bottle.post("/det/")
-def det():
-    id_matrike = bottle.request.forms["matrike"] 
-    return bottle.redirect(f"/det_rezultat/{id_matrike}/")
-
-
-@bottle.post("/sled/")
-def sled():
-    id_matrike = bottle.request.forms["matrike"]
-    return bottle.redirect(f"/sled_rezultat/{id_matrike}/")
-
-
-@bottle.post("/potenciraj/")
-def potenciraj():
-    id_matrike = bottle.request.forms["matrike"]
-    stopnja = bottle.request.forms["stopnja_potence"]
-    return bottle.redirect(f"/potenciraj_rezultat/{id_matrike}/{stopnja}")
-
-
-@bottle.post("/mnozenje_s_skalar/")
-def mnozenje_s_skalar():
-    id_matrike = bottle.request.forms["matrike"]
-    skalar = bottle.request.forms["zeljen_skalar"]
-    return bottle.redirect(f"/mnozenje_s_skalar_rezultat/{id_matrike}/{skalar}")
-
-
-@bottle.post("/zmnozi/")
-def zmnozi():
+@bottle.post("/operacija-dveh/")
+def operacija_dveh():
     id_matrike1 = bottle.request.forms["matrika1"]
     id_matrike2 = bottle.request.forms["matrika2"]
-    return bottle.redirect(f"/zmnozi_rezultat/{id_matrike1}/{id_matrike2}")
+    if bottle.request.forms["operacija"]== "sestej":
+        return bottle.redirect(f"/sestej_rezultat/{id_matrike1}/{id_matrike2}")
+    else:
+        return bottle.redirect(f"/zmnozi_rezultat/{id_matrike1}/{id_matrike2}")
 
 
-@bottle.post("/sestej/")
-def sestej():
-    id_matrike1 = bottle.request.forms["matrika1"]
-    id_matrike2 = bottle.request.forms["matrika2"]
-    return bottle.redirect(f"/sestej_rezultat/{id_matrike1}/{id_matrike2}")
+OPERACIJE=["transponiraj", "prirejenka", "inverz", "det", "sled", "potenciraj", "mnozenje_s_skalar" ]
 
-
+@bottle.post("/operacija-ena/")
+def operacija_ena():
+    id_matrike = bottle.request.forms["matrike"]
+    for operacija in OPERACIJE:
+        if operacija==bottle.request.forms["operacija"]:
+            if operacija=="potenciraj":
+                stopnja = bottle.request.forms["stopnja_potence"]
+                return bottle.redirect(f"/potenciraj_rezultat/{id_matrike}/{stopnja}")
+            elif operacija=="mnozenje_s_skalar":
+                skalar = bottle.request.forms["zeljen_skalar"]
+                return bottle.redirect(f"/mnozenje_s_skalar_rezultat/{id_matrike}/{skalar}")
+            else:
+                return bottle.redirect(f"/{operacija}_rezultat/{id_matrike}/")
+            
 bottle.run(debug=True, reloader=True)
