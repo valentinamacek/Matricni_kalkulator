@@ -1,9 +1,9 @@
 %rebase('base.tpl')
-    <h1>Dobrodošli v matričnem kalkulatorju</h1>
-
-    Vaše matrike:
+    <h1>MATRIČNI KALKULATOR</h1>
+    Dobrodošli!
+    Tu je seznam vaših matrik:
     <ul>
-    <div class="container text-center">
+    <div class="container ">
      <div class="row row-cols-4">
     % for id_matrike, matrika in enumerate(matrike):
       <div class="col">
@@ -27,44 +27,52 @@
     <form action="/operacija/" method="POST">
     </form>
       <form action="/operacija-ena/" method="POST">
-        <select name="matrike">
+        <select name="matrike"  class="custom-select">
         %for id_matrike in range(len(matrike)):
         <option value="{{ id_matrike }}">Matrika {{id_matrike + 1}}</option>
         %end
         </select>
-        <div class="btn-group">
+        <div class="container">
+         <div class="row row-cols-8">
         % for operacija in operacije:
           %if operacija == "potenciraj":
+          <div class="col">
             <div class="input-group">
             <input type="text"  name="stopnja_potence"  placeholder="Stopnja potence" size="2"  >
-            <button type="submit" class="btn btn-info btn-md" name="operacija" value="potenciraj">Potenciraj</button>
+            <button type="submit" class="btn btn-outline-primary btn-md" name="operacija" value="potenciraj" >Potenciraj</button>
             </div>
+          </div>
           %elif operacija=="mnozenje_s_skalar":
+          <div class="col">
             <div class="input-group">
             <input type="text" name="zeljen_skalar"  placeholder="Skalar"  size="2">  
-            <button type="submit" class="btn btn-info btn-md" name="operacija" value="mnozenje_s_skalar">
+            <button type="submit" class="btn btn-outline-primary btn-md" name="operacija" value="mnozenje_s_skalar">
             Pomnoži
             </button>
             </div>
+          </div>
           %else:
-            <button type="submit" name="operacija" value= {{ operacija }} class="btn btn-info" >{{operacija.capitalize()}}</button>
+          <div class="col">
+            <button type="submit" name="operacija" value= {{ operacija }} class="btn btn-outline-primary" >{{operacija.capitalize()}}</button>
+          </div>
           %end
         % end
+         </div>
         </div>
       </form>  
-      <form action="/operacija-dveh/" method="POST">
-        <select name="matrika1">
+      <form action="/operacija-dveh/" method="POST" class="container-fluid justify-content-start">
+        <select name="matrika1" class="custom-select">
         %for id_matrike in range(len(matrike)):
         <option value="{{ id_matrike }}">Matrika {{id_matrike + 1}}</option>
         %end
         </select>
-        <select name="matrika2">
+        <select name="matrika2" class="custom-select">
         %for id_matrike in range(len(matrike)):
         <option value="{{ id_matrike }}">Matrika {{id_matrike + 1}}</option>
         %end
         </select>
-        <div class="btn-group">
-        <button type="submit" name="operacija" value="sestej" class="btn btn-info">Seštej</button>
-        <button type="submit" name="operacija" value="zmnozi"class="btn btn-info">Zmnoži </button>
-        </div>
+        <button type="submit" class="btn btn-primary">Izberi operacijo </button>
       </form>
+
+     
+     
