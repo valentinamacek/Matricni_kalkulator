@@ -95,30 +95,40 @@ def mnozenje_s_skalar_rezultat(id_matrike, skalar):
     return bottle.template("mnozenje_s_skalar_rezultat.tpl", matrika=matrika, rezultat=rezultat, skalar=skalar)
 
 
-@bottle.get("/zmnozi_rezultat/<id_matrike1:int>/<id_matrike2:int>")
-def zmnozi_rezultat(id_matrike1, id_matrike2):
-    matrika1 = stanje.matrike[id_matrike1]
-    matrika2 = stanje.matrike[id_matrike2]
-    produkt = matrika1 * matrika2
-    return bottle.template("zmnozi_rezultat.tpl", matrika1=matrika1, matrika2=matrika2, produkt=produkt)
-
-
-@bottle.get("/sestej_rezultat/<id_matrike1:int>/<id_matrike2:int>")
-def sestej_rezultat(id_matrike1, id_matrike2):
+@bottle.get("/rezultat_dveh/<id_matrike1:int>/<id_matrike2:int>/<stanje_r:int>")
+def prikazi_rezultat_dveh(id_matrike1, id_matrike2, stanje_r):
+    napake={}
     matrika1 = stanje.matrike[id_matrike1]
     matrika2 = stanje.matrike[id_matrike2]
     vsota = matrika1 + matrika2
-    return bottle.template("sestej_rezultat.tpl", matrika1=matrika1, matrika2=matrika2, vsota=vsota)
-
+    if isinstance(vsota, Matrika)==False:
+       napake["vsota"]="Matriki morata biti iste velikosti"
+    produkt = matrika1 * matrika2
+    if isinstance(produkt, Matrika)== False:
+       napake["produkt"]="Prva matrika mora imeti toliko stolpcev kot ima druga matrika vrstic"
+    if stanje_r==1 and isinstance(vsota, Matrika):
+            stanje.dodaj_matriko(vsota)
+    if stanje_r==2 and isinstance(produkt, Matrika):
+            stanje.dodaj_matriko(produkt)
+    return bottle.template("rezultat_dveh.tpl", matrika1=matrika1, matrika2=matrika2, vsota=vsota, produkt=produkt,
+        id_matrike1=id_matrike1,id_matrike2=id_matrike2, matrike=stanje.matrike, operacije=OPERACIJE, napake=napake)
+    
+@bottle.post("/dodaj-rezultats/<id_matrike1:int>/<id_matrike2:int>/")
+def dodaj_rezultats(id_matrike1, id_matrike2):
+    stanje_r=1
+    return bottle.redirect(f"/rezultat_dveh/{id_matrike1}/{id_matrike2}/{stanje_r}")
+  
+@bottle.post("/dodaj-rezultatz/<id_matrike1:int>/<id_matrike2:int>/")
+def dodaj_rezultatz(id_matrike1, id_matrike2):
+    stanje_r=2
+    return bottle.redirect(f"/rezultat_dveh/{id_matrike1}/{id_matrike2}/{stanje_r}")
 
 @bottle.post("/operacija-dveh/")
 def operacija_dveh():
     id_matrike1 = bottle.request.forms["matrika1"]
     id_matrike2 = bottle.request.forms["matrika2"]
-    if bottle.request.forms["operacija"]== "sestej":
-        return bottle.redirect(f"/sestej_rezultat/{id_matrike1}/{id_matrike2}")
-    else:
-        return bottle.redirect(f"/zmnozi_rezultat/{id_matrike1}/{id_matrike2}")
+    stanje_r=0
+    return bottle.redirect(f"/rezultat_dveh/{id_matrike1}/{id_matrike2}/{stanje_r}")
 
 
 OPERACIJE=["transponiraj", "prirejenka", "inverz", "det", "sled", "potenciraj", "mnozenje_s_skalar" ]
