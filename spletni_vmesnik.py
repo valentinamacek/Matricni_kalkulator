@@ -1,6 +1,6 @@
 from ssl import OP_ALL
 import bottle
-from model import Stanje, Matrika, je_matrika_s_stevili
+from model import Stanje, Matrika
 import numpy as np
 
 IME_DATOTEKE = "stanje.json"
@@ -26,73 +26,46 @@ def zacetna_stran():
         "zacetna_stran.tpl",
         matrike=stanje.matrike, operacije=OPERACIJE)
 
+@bottle.post("/izberi_stevilo/")
+def izbira_st_matrik():
+    stevilo=bottle.request.forms["izbira"]
+    if stevilo=="ena":
+        bottle.redirect("/operacije-ena/")
+    else:
+        bottle.redirect("/operacije-dve/")
+
+@bottle.get("/operacije-ena/")
+def operacije_ena_prikaz():
+    return bottle.template("operacije_ena.tpl", matrike=stanje.matrike, operacije=OPERACIJE)
+
+@bottle.get("/operacije-dve/")
+def operacije_dve_prikaz():
+    return bottle.template("operacije_dve.tpl", matrike=stanje.matrike, operacije=OPERACIJE)
+
 @bottle.post("/dodaj-matriko/")
 def dodaj_matriko_post():
     elementi=bottle.request.forms["matrika"]
-    if je_matrika_s_stevili(elementi):
-        seznam = np.matrix(elementi)
-        matrika = Matrika(seznam)
-        napake = stanje.preveri_podatke_nove_matrike(matrika)
+    pretvorba=Matrika.spremeni_v_matriko(elementi)
+    if isinstance(pretvorba, Matrika):
+        napake = stanje.preveri_podatke_nove_matrike(pretvorba)
         if napake:
             return bottle.template("dodaj_matriko.tpl", napake=napake)
         else:
-            stanje.dodaj_matriko(matrika)
+            stanje.dodaj_matriko(pretvorba)
             bottle.redirect("/")
     else:
-        napake={}
-        napaka= "Matrični elementi morajo biti števila"
-        napake["matrika"]=napaka
-        return bottle.template("dodaj_matriko.tpl", napake=napake)
+        return bottle.template("dodaj_matriko.tpl", napake=pretvorba)
 
 
 
-@bottle.get("/transponiraj_rezultat/<id_matrike:int>/")
-def transponiraj_rezultat(id_matrike):
-    matrika = stanje.matrike[id_matrike]
-    transponirana = matrika.transponiraj()
-    return bottle.template("transponiraj_rezultat.tpl", matrika=matrika, transponirana=transponirana)
-
-
-@bottle.get("/prirejenka_rezultat/<id_matrike:int>/")
-def prirejenka_rezultat(id_matrike):
-    matrika = stanje.matrike[id_matrike]
-    prirejena = matrika.prirejenka()
-    return bottle.template("prirejenka_rezultat.tpl", matrika=matrika, prirejena=prirejena)
-
-
-@bottle.get("/inverz_rezultat/<id_matrike:int>/")
-def inverz_rezultat(id_matrike):
-    matrika = stanje.matrike[id_matrike]
-    inverz = matrika.inverz()
-    return bottle.template("inverz_rezultat.tpl", matrika=matrika, inverz=inverz)
-
-
-@bottle.get("/det_rezultat/<id_matrike:int>/")
-def det_rezultat(id_matrike):
-    matrika = stanje.matrike[id_matrike]
-    determinanta = matrika.det()
-    return bottle.template("det_rezultat.tpl", matrika=matrika, determinanta=determinanta)
-
-
-@bottle.get("/sled_rezultat/<id_matrike:int>/")
-def sled_rezultat(id_matrike):
-    matrika = stanje.matrike[id_matrike]
-    sled = matrika.sled()
-    return bottle.template("sled_rezultat.tpl", matrika=matrika, sled=sled)
-
-
-@bottle.get("/potenciraj_rezultat/<id_matrike:int>/<stopnja>")
+@bottle.get("/potenciraj_rezultat/<id_matrike:int>/<stopnja>/")
 def potenciraj_rezultat(id_matrike, stopnja):
     matrika = stanje.matrike[id_matrike]
     rezultat = matrika.potenciraj(float(stopnja))
     return bottle.template("potenciraj_rezultat.tpl", matrika=matrika, rezultat=rezultat, stopnja=stopnja, Matrika=Matrika)
 
 
-@bottle.get("/mnozenje_s_skalar_rezultat/<id_matrike:int>/<skalar>")
-def mnozenje_s_skalar_rezultat(id_matrike, skalar):
-    matrika = stanje.matrike[id_matrike]
-    rezultat = matrika.mnozenje_s_skalar(float(skalar))
-    return bottle.template("mnozenje_s_skalar_rezultat.tpl", matrika=matrika, rezultat=rezultat, skalar=skalar)
+
 
 
 @bottle.get("/rezultat_dveh/<id_matrike1:int>/<id_matrike2:int>/<stanje_r:int>")
@@ -108,7 +81,7 @@ def prikazi_rezultat_dveh(id_matrike1, id_matrike2, stanje_r):
        napake["produkt"]="Prva matrika mora imeti toliko stolpcev kot ima druga matrika vrstic"
     if stanje_r==1 and isinstance(vsota, Matrika):
             stanje.dodaj_matriko(vsota)
-    if stanje_r==2 and isinstance(produkt, Matrika):
+    elif stanje_r==2 and isinstance(produkt, Matrika):
             stanje.dodaj_matriko(produkt)
     return bottle.template("rezultat_dveh.tpl", matrika1=matrika1, matrika2=matrika2, vsota=vsota, produkt=produkt,
         id_matrike1=id_matrike1,id_matrike2=id_matrike2, matrike=stanje.matrike, operacije=OPERACIJE, napake=napake)
@@ -131,20 +104,80 @@ def operacija_dveh():
     return bottle.redirect(f"/rezultat_dveh/{id_matrike1}/{id_matrike2}/{stanje_r}")
 
 
-OPERACIJE=["transponiraj", "prirejenka", "inverz", "det", "sled", "potenciraj", "mnozenje_s_skalar" ]
+OPERACIJE=["transponiraj", "prirejenka", "inverz", "det", "sled"]
+
+@bottle.get("/rezultat_ene/<id_matrike:int>/<stanje_r:int>/<skalar>/<stopnja>/")
+def prikazi_rezultat_ene(id_matrike, stanje_r, skalar, stopnja):
+    napake={}
+    matrika = stanje.matrike[id_matrike]
+    transponirana = matrika.transponiraj()
+    prirejenka = matrika.prirejenka()
+    if isinstance(prirejenka, Matrika)==False:
+        napake.update(prirejenka)
+    inverz = matrika.inverz()
+    if isinstance(inverz, Matrika)==False:
+        napake.update(inverz)
+    determinanta = matrika.det()
+    if isinstance(determinanta, float)==False:
+        napake.update(determinanta)
+    sled = matrika.sled()
+    if isinstance(sled, float)==False:
+        napake.update(sled)
+    if stanje_r==1 :
+        stanje.dodaj_matriko(transponirana)
+    elif stanje_r==2 and isinstance(prirejenka, Matrika):
+        stanje.dodaj_matriko(prirejenka)
+    elif stanje_r==3 and isinstance(inverz, Matrika):
+        stanje.dodaj_matriko(inverz)
+    if skalar=='s' and stopnja=='p':
+        return bottle.template("rezultat_ene.tpl", matrika=matrika, transponirana=transponirana, prirejenka=prirejenka, 
+        inverz=inverz, determinanta=determinanta, sled=sled, skalar=skalar, stopnja=stopnja,
+        id_matrike_izbrana=id_matrike, matrike=stanje.matrike, operacije=OPERACIJE, napake=napake) 
+    elif skalar!='s' and stopnja=='p':
+        rezultat_mnozenjas = matrika.mnozenje_s_skalar(skalar)
+        if isinstance(rezultat_mnozenjas, Matrika)==False:
+            napake.update(rezultat_mnozenjas)
+        return bottle.template("rezultat_ene.tpl", matrika=matrika, transponirana=transponirana, prirejenka=prirejenka, 
+        inverz=inverz, determinanta=determinanta, sled=sled, skalar=skalar, stopnja=stopnja, rezultat_mnozenjas=rezultat_mnozenjas,
+        id_matrike_izbrana=id_matrike, matrike=stanje.matrike, operacije=OPERACIJE, napake=napake) 
+    elif skalar=='s' and stopnja!='p':
+        rezultat_potenciranja = matrika.potenciraj(float(stopnja))
+        if isinstance(rezultat_potenciranja, Matrika)==False:
+            napake.update(rezultat_potenciranja)
+        return bottle.template("rezultat_ene.tpl", matrika=matrika, transponirana=transponirana, prirejenka=prirejenka, 
+        inverz=inverz, determinanta=determinanta, sled=sled, skalar=skalar, stopnja=stopnja, rezultat_potenciranja=rezultat_potenciranja,
+        id_matrike_izbrana=id_matrike, matrike=stanje.matrike, operacije=OPERACIJE, napake=napake)
+    else:
+        rezultat_mnozenjas = matrika.mnozenje_s_skalar(skalar)
+        rezultat_potenciranja = matrika.potenciraj(float(stopnja))
+        return bottle.template("rezultat_ene.tpl", matrika=matrika, transponirana=transponirana, prirejenka=prirejenka, 
+        inverz=inverz, determinanta=determinanta, sled=sled, skalar=skalar, stopnja=stopnja, rezultat_potenciranja=rezultat_potenciranja,
+        rezultat_mnozenjas=rezultat_mnozenjas,
+        id_matrike_izbrana=id_matrike, matrike=stanje.matrike, operacije=OPERACIJE, napake=napake)
+
 
 @bottle.post("/operacija-ena/")
 def operacija_ena():
     id_matrike = bottle.request.forms["matrike"]
-    for operacija in OPERACIJE:
-        if operacija==bottle.request.forms["operacija"]:
-            if operacija=="potenciraj":
-                stopnja = bottle.request.forms["stopnja_potence"]
-                return bottle.redirect(f"/potenciraj_rezultat/{id_matrike}/{stopnja}")
-            elif operacija=="mnozenje_s_skalar":
-                skalar = bottle.request.forms["zeljen_skalar"]
-                return bottle.redirect(f"/mnozenje_s_skalar_rezultat/{id_matrike}/{skalar}")
-            else:
-                return bottle.redirect(f"/{operacija}_rezultat/{id_matrike}/")
+    stanje_r=0
+    skalar='s'
+    stopnja='p'
+    return bottle.redirect(f"/rezultat_ene/{id_matrike}/{stanje_r}/{skalar}/{stopnja}/")
+
+
+@bottle.post("/mnozenje_s_skalar_rezultat/<id_matrike:int>/")
+def mnozenje_s_skalar(id_matrike):
+    skalar = bottle.request.forms["zeljen_skalar"]
+    stanje_r=0
+    stopnja='p'
+    return bottle.redirect(f"/rezultat_ene/{id_matrike}/{stanje_r}/{skalar}/{stopnja}/")
+
+
+@bottle.post("/potenciraj_rezultat/<id_matrike:int>/")
+def potenciraj(id_matrike):
+    stopnja = bottle.request.forms["stopnja_potence"]
+    skalar='s'
+    stanje_r=0
+    return bottle.redirect(f"/rezultat_ene/{id_matrike}/{stanje_r}/{skalar}/{stopnja}/")    
             
 bottle.run(debug=True, reloader=True)
