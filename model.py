@@ -2,14 +2,6 @@ import numpy as np
 import json
 import fractions
 
-def je_matrika_s_stevili(niz):
-    assert isinstance(niz, str)
-    try: 
-        np.matrix(niz)
-        return True
-    except ValueError:
-        return False
-    
 
 class Stanje:
     def __init__(self, matrike):
@@ -49,7 +41,7 @@ class Stanje:
         with open(ime_datoteke) as dat:
             slovar = json.load(dat)
             return Stanje.iz_slovarja(slovar)
-
+  
 
 class Matrika:
     def __init__(self, matrika):
@@ -97,16 +89,24 @@ class Matrika:
                     k -= 1
                 return potencirana
             else:
-                print("Vnesi kvadratno matriko")
+                return {"potenciraj":"Matrika mora biti kvadratna"}
         else:
-            print("Vnesi nenegativno celo stevilo")
+            return {"potenciraj":"Vnesi nenegativno celo stevilo"}
 
     def mnozenje_s_skalar(self, skalar):
+        try:
+            float(skalar)
+        except ValueError:
+            try:
+                fractions.Fraction(skalar)
+                skalar=float(fractions.Fraction(skalar))
+            except ValueError:
+                return {"skalar": "Vnesi realno število"}
         nova = []
         for vrstica in self.matrika:
             novav = []
             for element in vrstica:
-                k = skalar * element
+                k = float(skalar) * element
                 novav.append(k)
             nova.append(novav)
         return Matrika(nova)
@@ -132,7 +132,7 @@ class Matrika:
                         vsota -= element*brezistolpca.det()
                 return vsota
         else:
-            print("Matrika mora biti kvadratna")
+            return {"det" :"Matrika mora biti kvadratna"}
 
     def prirejenka(self):
         if self.st_stolpcev == self.st_vrstic:
@@ -153,7 +153,7 @@ class Matrika:
                 nova.append(novav)
             return Matrika(nova)
         else:
-            print("Matrika mora biti kvadratna")
+            return {"prirejenka" : "Matrika mora biti kvadratna"}
 
     def inverz(self):
         if self.st_stolpcev == self.st_vrstic:
@@ -164,15 +164,18 @@ class Matrika:
                 inverz = prirejenkaT.mnozenje_s_skalar(1/detmat)
                 return inverz
             else:
-                print("Matrika ni obrnljiva")
+                return {"inverz": "Matrika ni obrnljiva"}
         else:
-            print("Matrika ni obrnljiva")
+           return {"inverz": "Matrika ni obrnljiva"}
 
     def sled(self):
-        sled = 0
-        for i in range(self.st_vrstic):
-            sled += self.matrika[i][i]
-        return sled
+        if self.st_stolpcev == self.st_vrstic:
+            sled = 0
+            for i in range(self.st_vrstic):
+                sled += self.matrika[i][i]
+            return sled
+        else:
+            return {"sled" : "Matrika mora biti kvadratna"}
 
     def v_slovar(self):
         seznam = self.matrika.tolist()
@@ -194,3 +197,24 @@ class Matrika:
                 novav.append(nov)
             nova.append(novav)
         return nova
+    
+    @staticmethod
+    def spremeni_v_matriko(niz):
+           vrstice=niz.split(";")
+           seznam=[]
+           for vrstica in vrstice:
+                seznamv=[]
+                elementi=vrstica.split()
+                for element in elementi:
+                      try:
+                        float(element)
+                      except ValueError:
+                        try:
+                            fractions.Fraction(element)
+                            element=float(fractions.Fraction(element))
+                        except ValueError:
+                          return {"matrika": "Še enkrat preberi navodila"}
+                      seznamv.append(element)
+                seznam.append(seznamv)
+           return Matrika(seznam)
+        
