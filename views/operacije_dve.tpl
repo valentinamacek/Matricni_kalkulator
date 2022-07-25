@@ -24,16 +24,16 @@
     <div class="col"> <a href="/dodaj-matriko/">Dodaj matriko </a> </div>
      </div>
     </div>
-      <form action="/izberi_stevilo/" method="POST">
-           <button type="submit" class="btn btn-primary btn-lg btn-block" name="izbira" value="ena" >
-            Operacije na eni matriki
-           </button>
-           <button type="submit" class="btn btn-primary btn-lg btn-block" name="izbira" value="dve" >
-            Operacije na dveh matrikah
-           </button>
-      </form>
-        
-        
-
-     
-     
+     <form action="/operacija-dveh/" method="POST" class="container-fluid justify-content-start">
+        <select name="matrika1" class="custom-select">
+        %for id_matrike in range(len(matrike)):
+        <option value="{{ id_matrike }}">Matrika {{id_matrike + 1}}</option>
+        %end
+        </select>
+        <select name="matrika2" class="custom-select">
+        %for id_matrike in range(len(matrike)):
+        <option value="{{ id_matrike }}">Matrika {{id_matrike + 1}}</option>
+        %end
+        </select>
+        <button type="submit" class="btn btn-primary">Izberi operacijo </button>
+    </form>

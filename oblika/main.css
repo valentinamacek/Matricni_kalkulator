@@ -31,3 +31,26 @@ h1 {
     padding-right: 0;
     padding-left: 0;
   } */
+.det {
+    position: relative;
+}
+.det:before, .det:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    border: 1px solid #000;
+    width: 6px;
+    height: 100%;
+}
+.det:before {
+    left: -6px;
+    border-right: 0;
+    border-top: 0;
+    border-bottom: 0;
+}
+.det:after {
+    right: -6px;
+    border-left: 0;
+    border-top: 0;
+    border-bottom:0;
+}
