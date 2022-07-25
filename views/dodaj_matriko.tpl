@@ -1,10 +1,11 @@
 %rebase('base.tpl')
 Navodila:
-Vnesi elemente nove matrike, tako da:
+Elementi matrike naj bodo realna števila.
+Vnesi jih, tako da:
 <ul>
 <li> napišeš željen element za njim pa presledek </li>
-<li> znak za novo vrstico je: ; 
 </ul>
+Znak za novo vrstico je: <strong> ; </strong>
 <form method="POST">
  <input name="matrika" placeholder="matrika">
 % if "matrika" in napake:
