@@ -103,7 +103,8 @@
                      </table>
                     </div>
                     %if vsota not in matrike:
-                    <div class="col-md-auto offset-md-4">
+                    <div class="col-md-auto">
+                    <p class="float-end">
                     <form action="/dodaj-rezultats/{{ id_matrike1 }}/{{ id_matrike2 }}/" method="POST">
                                               <div class="form-check">
                           <input class="form-check-input" type="checkbox" value="" id="shranis">
@@ -113,6 +114,7 @@
                         </div>
                       <button type="submit" class="btn btn-light">Shrani  </button>
                     </form>
+                    </p>
                     </div>
                     %end
                   </div>

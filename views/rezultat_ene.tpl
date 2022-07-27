@@ -113,6 +113,21 @@
                             % end
                         </table>
                         </div>
+                        %if transponirana not in matrike:
+                        <div class="col-md-auto">
+                        <p class="float-end">
+                        <form action="/dodaj-rezultattransponiranja/{{ id_matrike_izbrana }}/" method="POST">
+                                                <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="shranit">
+                            <label class="form-check-label" for="shranit">
+                                Shrani rezultat v seznam mojih matrik
+                            </label>
+                            </div>
+                        <button type="submit" class="btn btn-light">Shrani  </button>
+                        </form>
+                        </p>
+                        </div>
+                        %end
                     </div>
                 </div>
             </div>
@@ -146,6 +161,21 @@
                             % end
                             </table>
                         </div>
+                        %if prirejenka not in matrike:
+                        <div class="col-md-auto">
+                        <p class="float-end">
+                        <form action="/dodaj-rezultatprirejenke/{{ id_matrike_izbrana }}/" method="POST">
+                                                <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="shranip">
+                            <label class="form-check-label" for="shranip">
+                                Shrani rezultat v seznam mojih matrik
+                            </label>
+                            </div>
+                        <button type="submit" class="btn btn-light">Shrani  </button>
+                        </form>
+                        </p>
+                        </div>
+                        %end
                     </div>
                 </div>
             </div>
@@ -180,6 +210,21 @@
                             % end
                             </table>
                         </div>
+                        %if inverz not in matrike:
+                        <div class="col-md-auto">
+                        <p class="float-end">
+                        <form action="/dodaj-rezultatinverz/{{ id_matrike_izbrana }}/" method="POST">
+                                                <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="shranii">
+                            <label class="form-check-label" for="shranii">
+                                Shrani rezultat v seznam mojih matrik
+                            </label>
+                            </div>
+                        <button type="submit" class="btn btn-light">Shrani  </button>
+                        </form>
+                        </p>
+                        </div>
+                        %end
                     </div>
                 </div>
             </div>

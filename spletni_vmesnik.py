@@ -164,6 +164,26 @@ def operacija_ena():
     stopnja='p'
     return bottle.redirect(f"/rezultat_ene/{id_matrike}/{stanje_r}/{skalar}/{stopnja}/")
 
+@bottle.post("/dodaj-rezultattransponiranja/<id_matrike:int>/")
+def dodaj_rezultattransponiranja(id_matrike):
+    stanje_r=1
+    skalar='s'
+    stopnja='p'
+    return bottle.redirect(f"/rezultat_ene/{id_matrike}/{stanje_r}/{skalar}/{stopnja}/")
+
+@bottle.post("/dodaj-rezultatprirejenke/<id_matrike:int>/")
+def dodaj_rezultatprirejenke(id_matrike):
+    stanje_r=2
+    skalar='s'
+    stopnja='p'
+    return bottle.redirect(f"/rezultat_ene/{id_matrike}/{stanje_r}/{skalar}/{stopnja}/") 
+
+@bottle.post("/dodaj-rezultatinverz/<id_matrike:int>/")
+def dodaj_rezultatinverz(id_matrike):
+    stanje_r=3
+    skalar='s'
+    stopnja='p'
+    return bottle.redirect(f"/rezultat_ene/{id_matrike}/{stanje_r}/{skalar}/{stopnja}/")   
 
 @bottle.post("/mnozenje_s_skalar_rezultat/<id_matrike:int>/")
 def mnozenje_s_skalar(id_matrike):
