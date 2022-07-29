@@ -2,8 +2,12 @@ h1 {
     color: rgb(0, 30, 255);
     text-align: center;
 }
+td {
+    text-align: center;
+}
 .matrika {
     position: relative;
+    border-spacing: 5px;
 }
 .matrika:before, .matrika:after {
     content: "";
@@ -21,16 +25,6 @@ h1 {
     right: -6px;
     border-left: 0;
 }
-/* .row.no-gutter {
-    margin-left: 0;
-    margin-right: 0;
-  }
-  
-  .row.no-gutter [class*='col-']:not(:first-child),
-  .row.no-gutter [class*='col-']:not(:last-child) {
-    padding-right: 0;
-    padding-left: 0;
-  } */
 .det {
     position: relative;
 }
