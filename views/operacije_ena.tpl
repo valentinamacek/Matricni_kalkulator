@@ -2,6 +2,11 @@
     <h1>MATRIČNI KALKULATOR</h1>
     Dobrodošli!
     Tu je seznam vaših matrik:
+    <div class="float-end p-4">
+    <form method="POST" action="/odjava/">
+    <button type="submit" class="btn btn-outline-primary"> Odjavi se </button>
+    </form>
+    </div>
     <ul>
     <div class="container ">
      <div class="row row-cols-4">
@@ -21,10 +26,10 @@
       </div>
     % end
     </ul>
-    <div class="col"> <a href="/dodaj-matriko/">Dodaj matriko </a> </div>
+  <div class="float-end p-4">  <a href="/dodaj-matriko/">Dodaj matriko </a> </div> <br>
      </div>
     </div>
-      <form action="/operacija-ena/" method="POST">
+      <form action="/operacija-ena/0/n/p/s/" method="POST">
         <select name="matrike"  class="custom-select">
         %for id_matrike in range(len(matrike)):
         <option value="{{ id_matrike }}">Matrika {{id_matrike + 1}}</option>

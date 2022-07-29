@@ -2,6 +2,11 @@
     <h1>MATRIČNI KALKULATOR</h1>
     Dobrodošli!
     Tu je seznam vaših matrik:
+    <div class="float-end p-4">
+    <form method="POST" action="/odjava/">
+    <button type="submit" class="btn btn-outline-primary"> Odjavi se </button>
+    </form>
+    </div>
     <ul>
     <div class="container ">
      <div class="row row-cols-4">
@@ -21,7 +26,7 @@
       </div>
     % end
     </ul>
-    <div class="col"> <a href="/dodaj-matriko/">Dodaj matriko </a> </div>
+    <div class="float-end p-4">  <a href="/dodaj-matriko/">Dodaj matriko </a> </div> <br>
      </div>
     </div>
       <div class="d-flex">
@@ -29,7 +34,7 @@
         <select name="matrika1" class="custom-select" disabled>
         %for id_matrike in range(len(matrike)):
            %if id_matrike==id_matrike1:
-          <option value="{{ id_matrike }}" selected="selected">Matrika {{id_matrike + 1}}</option>
+          <option value="{{ id_matrike1 }}" selected="selected">Matrika {{id_matrike1 + 1}}</option>
            %else:
           <option value="{{ id_matrike }}">Matrika {{id_matrike + 1}}</option>
           %end
@@ -40,7 +45,7 @@
         <select name="matrika2" class="custom-select" disabled>
         %for id_matrike in range(len(matrike)):
           %if id_matrike==id_matrike2:
-            <option value="{{ id_matrike }}" selected="selected">Matrika {{id_matrike + 1}}</option>
+            <option value="{{ id_matrike2 }}" selected="selected">Matrika {{id_matrike2 + 1}}</option>
           %else:
             <option value="{{ id_matrike }}">Matrika {{id_matrike + 1}}</option>
           %end
@@ -105,7 +110,7 @@
                     %if vsota not in matrike:
                     <div class="col-md-auto">
                     <p class="float-end">
-                    <form action="/dodaj-rezultats/{{ id_matrike1 }}/{{ id_matrike2 }}/" method="POST">
+                    <form action="/operacija-dve/1/{{ id_matrike1 }}/{{ id_matrike2 }}/" method="POST">
                                               <div class="form-check">
                           <input class="form-check-input" type="checkbox" value="" id="shranis">
                           <label class="form-check-label" for="shranis">
@@ -170,7 +175,7 @@
                         </div>
                             %if produkt not in matrike:
                             <div class="col-md-auto offset-md-4">
-                            <form action="/dodaj-rezultatz/{{ id_matrike1 }}/{{ id_matrike2 }}/" method="POST">
+                            <form action="/operacija-dve/2/{{ id_matrike1 }}/{{ id_matrike2 }}/" method="POST">
                                                       <div class="form-check">
                                   <input class="form-check-input" type="checkbox" value="" id="shrani">
                                   <label class="form-check-label" for="shrani">
