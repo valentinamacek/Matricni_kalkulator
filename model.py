@@ -59,7 +59,7 @@ class Matrika:
         if self.st_stolpcev == other.st_stolpcev and self.st_vrstic == other.st_vrstic:
             return Matrika(self.matrika + other.matrika)
         else:
-            print("Matriki morata biti iste velikosti")
+            return {"vsota" :"Matriki morata biti iste velikosti"}
 
     def __mul__(self, other):
         if self.st_stolpcev == other.st_vrstic:
@@ -75,22 +75,27 @@ class Matrika:
                 nova.append(novavrst)
             return Matrika(nova)
         else:
-            print("Prva matrika mora imeti toliko stolpcev kot ima druga matrika vrstic")
+            return {"produkt" : "Prva matrika mora imeti toliko stolpcev kot ima druga matrika vrstic" }
 
     def potenciraj(self, n):
-        if n >= 0 and float(n).is_integer():
-            g=float(n)
-            c=int(g)
-            if self.st_stolpcev == self.st_vrstic:
-                k = c-1
-                potencirana = self
-                while k != 0:
-                    potencirana = potencirana * self
-                    k -= 1
-                return potencirana
-            else:
-                return {"potenciraj":"Matrika mora biti kvadratna"}
-        else:
+        try:
+            float(n)
+            if float(n).is_integer():
+                g=float(n)
+                c=int(g)
+                if c>=0:
+                    if self.st_stolpcev == self.st_vrstic:
+                        k = c-1
+                        potencirana = self
+                        while k != 0:
+                            potencirana = potencirana * self
+                            k -= 1
+                        return potencirana
+                    else:
+                        return {"potenciraj":"Matrika mora biti kvadratna"}
+                else:
+                    return {"potenciraj":"Vnesi nenegativno celo stevilo"}
+        except ValueError:
             return {"potenciraj":"Vnesi nenegativno celo stevilo"}
 
     def mnozenje_s_skalar(self, skalar):
