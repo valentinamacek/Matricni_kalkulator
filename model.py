@@ -9,7 +9,9 @@ class Stanje:
 
     def dodaj_matriko(self, matrika):
         self.matrike.append(matrika)
-        
+
+    def odstrani_matriko(self, matrika):
+        self.matrike.remove(matrika)
 
     def preveri_podatke_nove_matrike(self, nova_matrika):
         for matrika in self.matrike:
@@ -205,11 +207,18 @@ class Matrika:
     
     @staticmethod
     def spremeni_v_matriko(niz):
+        if niz=="":
+            return {"matrika": "Še enkrat preberi navodila"}
+        else:
            vrstice=niz.split(";")
            seznam=[]
+           prvavrstica=vrstice[0].split()
+           st_stolpcev=len(prvavrstica)
            for vrstica in vrstice:
                 seznamv=[]
                 elementi=vrstica.split()
+                if len(elementi) != st_stolpcev:
+                    return {"matrika": "To ni matrika"}
                 for element in elementi:
                       try:
                         float(element)
