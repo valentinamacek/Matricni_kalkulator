@@ -1,6 +1,6 @@
 %rebase('base.tpl')
     <h1>MATRIČNI KALKULATOR</h1>
-    Dobrodošli!
+   
     Tu je seznam vaših matrik:
     <div class="float-end p-4">
     <form method="POST" action="/odjava/">
@@ -26,7 +26,7 @@
       </div>
     % end
     </ul>
-    <div class="float-end p-4">  <a href="/dodaj-matriko/">Dodaj matriko </a> </div> <br>
+    <div class="float-end p-4">  <a href="/"">Začetna stran </a> </div> <br>
      </div>
     </div>
       <div class="d-flex">

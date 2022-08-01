@@ -7,7 +7,7 @@ td {
 }
 .matrika {
     position: relative;
-    border-spacing: 5px;
+    border-spacing: 25px;
 }
 .matrika:before, .matrika:after {
     content: "";
