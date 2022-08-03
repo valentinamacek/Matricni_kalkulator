@@ -87,34 +87,6 @@
         {
             "matrika": [
                 [
-                    -1.0,
-                    0.5
-                ],
-                [
-                    0.75,
-                    -0.25
-                ]
-            ],
-            "st_vrstic": 2,
-            "st_stolpcev": 2
-        },
-        {
-            "matrika": [
-                [
-                    1.375,
-                    -0.625
-                ],
-                [
-                    -0.9375,
-                    0.4375
-                ]
-            ],
-            "st_vrstic": 2,
-            "st_stolpcev": 2
-        },
-        {
-            "matrika": [
-                [
                     -9.0,
                     4.5
                 ],
@@ -139,6 +111,17 @@
             ],
             "st_vrstic": 2,
             "st_stolpcev": 2
+        },
+        {
+            "matrika": [
+                [
+                    7.0,
+                    5.3,
+                    4.0
+                ]
+            ],
+            "st_vrstic": 1,
+            "st_stolpcev": 3
         }
     ]
 }

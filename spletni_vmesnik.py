@@ -105,17 +105,24 @@ def dodaj_matriko_post():
 @bottle.post("/odstrani-matriko/")
 def odstrani_matriko_post():
     stanje=stanje_trenutnega_uporabnika()
-    if bottle.request.forms.get("izbrane")==None:
+    izbrane=[]
+    for id_matrike in range(len(stanje.matrike)):
+        if bottle.request.forms.get(f"{id_matrike}")!= None:
+           izbrane.append(id_matrike)
+    if izbrane==[]:
         napake = {"izbor" : "Izberi vsaj eno matriko , ki jo želiš izbrisati, ali pritisni prekliči"}
         return  bottle.template("odstrani_matriko.tpl", matrike=stanje.matrike, napake=napake)
     else:
-        id_izbranih_matrik = bottle.request.forms["izbrane"]
-        for id_izbrane_matrike in id_izbranih_matrik:
-            izbrana_matrika=stanje.matrike[int(id_izbrane_matrike)]
+        print(izbrane)
+        izbrane_matrike=[]
+        for id_izbrane_matrike in izbrane:
+            izbrana_matrika=stanje.matrike[id_izbrane_matrike]
+            izbrane_matrike.append(izbrana_matrika)
+        for izbrana_matrika in izbrane_matrike:
             stanje.odstrani_matriko(izbrana_matrika)
         shrani_stanje_trenutnega_uporabnika(stanje)
         bottle.redirect("/")
-
+        
 @bottle.post("/operacija-dve/<stanje_r:int>/<id_matrike1>/<id_matrike2>/")
 def operacija_dve(stanje_r, id_matrike1, id_matrike2):
     stanje=stanje_trenutnega_uporabnika()
@@ -132,13 +139,13 @@ def operacija_dve(stanje_r, id_matrike1, id_matrike2):
     if isinstance(produkt, Matrika)== False:
        napake.update(produkt)
     if stanje_r==1 and isinstance(vsota, Matrika):
-        napake = stanje.preveri_podatke_nove_matrike(vsota)
-        if not napake:
+        napaka = stanje.preveri_podatke_nove_matrike(vsota)
+        if not napaka:
             stanje.dodaj_matriko(vsota)
             shrani_stanje_trenutnega_uporabnika(stanje)
     elif stanje_r==2 and isinstance(produkt, Matrika):
-        napake = stanje.preveri_podatke_nove_matrike(produkt)
-        if not napake:
+        napaka = stanje.preveri_podatke_nove_matrike(produkt)
+        if not napaka:
             stanje.dodaj_matriko(produkt)
             shrani_stanje_trenutnega_uporabnika(stanje)
     return bottle.template("rezultat_dveh.tpl", matrika1=matrika1, matrika2=matrika2, vsota=vsota, produkt=produkt,
@@ -169,12 +176,14 @@ def operacija_ena(stanje_r, id_matrike, stopnja, skalar):
     sled = matrika.sled()
     if isinstance(sled, float)==False:
         napake.update(sled)
-    if stanje_r==1 :
+    if stanje_r==1:
         napaka = stanje.preveri_podatke_nove_matrike(transponirana)
         if not napaka:
             stanje.dodaj_matriko(transponirana)
             shrani_stanje_trenutnega_uporabnika(stanje)
-    elif stanje_r==2 and isinstance(prirejenka, Matrika):
+    else:
+         stanje=stanje_trenutnega_uporabnika()
+    if stanje_r==2 and isinstance(prirejenka, Matrika):
         napaka = stanje.preveri_podatke_nove_matrike(prirejenka)
         if not napaka:
             stanje.dodaj_matriko(prirejenka)

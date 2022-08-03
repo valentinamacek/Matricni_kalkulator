@@ -122,13 +122,7 @@
                         <div class="col-md-auto">
                         <div class="float-end">
                         <form action="/operacija-ena/1/{{ id_matrike_izbrana }}/{{ stopnja }}/{{ skalar }}/" method="POST">
-                                                <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="shranit">
-                            <label class="form-check-label" for="shranit">
-                                Shrani rezultat v seznam mojih matrik
-                            </label>
-                            </div>
-                        <button type="submit" class="btn btn-light">Shrani  </button>
+                        <button type="submit" class="btn btn-light">Shrani rezultat v seznam mojih matrik  </button>
                         </form>
                         </div><br>
                         </div>
@@ -175,13 +169,7 @@
                         <div class="col-md-auto">
                         <p class="float-end">
                         <form action="/operacija-ena/2/{{ id_matrike_izbrana }}/{{ stopnja }}/{{ skalar }}/" method="POST">
-                                                <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="shranip">
-                            <label class="form-check-label" for="shranip">
-                                Shrani rezultat v seznam mojih matrik
-                            </label>
-                            </div>
-                        <button type="submit" class="btn btn-light">Shrani  </button>
+                        <button type="submit" class="btn btn-light">Shrani rezultat v seznam mojih matrik  </button>
                         </form>
                         </p>
                         </div>
@@ -230,13 +218,7 @@
                         <div class="col-md-auto">
                         <p class="float-end">
                         <form action="/operacija-ena/3/{{id_matrike_izbrana}}/{{ stopnja }}/{{ skalar }}/" method="POST">
-                                                <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="shranii">
-                            <label class="form-check-label" for="shranii">
-                                Shrani rezultat v seznam mojih matrik
-                            </label>
-                            </div>
-                        <button type="submit" class="btn btn-light">Shrani  </button>
+                        <button type="submit" class="btn btn-light">Shrani rezultat v seznam mojih matrik  </button>
                         </form>
                         </p>
                         </div>
@@ -347,13 +329,7 @@
                         %if rezultat_potenciranja not in matrike:
                         <div class="col-md-auto">
                         <form action="/operacija-ena/4/{{ id_matrike_izbrana }}/{{ stopnja }}/{{ skalar }}/" method="POST">
-                                                <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="shranirp">
-                            <label class="form-check-label" for="shranirp">
-                                Shrani rezultat v seznam mojih matrik
-                            </label>
-                            </div>
-                        <button type="submit" class="btn btn-light">Shrani  </button>
+                        <button type="submit" class="btn btn-light">Shrani rezultat v seznam mojih matrik  </button>
                         </form>
                         </div>
                         %end
@@ -412,13 +388,7 @@
                                 <div class="col-md-auto">
                                 <p class="float-end">
                                 <form action="/operacija-ena/5/{{ id_matrike_izbrana }}/{{ stopnja }}/{{ skalar }}/" method="POST">
-                                                        <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="shranirs">
-                                    <label class="form-check-label" for="shranirs">
-                                        Shrani rezultat v seznam mojih matrik
-                                    </label>
-                                    </div>
-                                <button type="submit" class="btn btn-light">Shrani  </button>
+                                <button type="submit" class="btn btn-light">Shrani rezultat v seznam mojih matrik  </button>
                                 </form>
                                 </p>
                                 </div>

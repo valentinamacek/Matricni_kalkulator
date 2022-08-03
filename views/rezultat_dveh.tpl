@@ -26,7 +26,7 @@
       </div>
     % end
     </ul>
-    <div class="float-end p-4">  <a href="/"">Začetna stran </a> </div> <br>
+    <div class="float-end p-4">  <a href="/">Začetna stran </a> </div> <br>
      </div>
     </div>
       <div class="d-flex">
@@ -109,17 +109,9 @@
                     </div>
                     %if vsota not in matrike:
                     <div class="col-md-auto">
-                    <p class="float-end">
                     <form action="/operacija-dve/1/{{ id_matrike1 }}/{{ id_matrike2 }}/" method="POST">
-                                              <div class="form-check">
-                          <input class="form-check-input" type="checkbox" value="" id="shranis">
-                          <label class="form-check-label" for="shranis">
-                            Shrani rezultat v seznam mojih matrik
-                          </label>
-                        </div>
-                      <button type="submit" class="btn btn-light">Shrani  </button>
+                    <button type="submit" class="btn btn-light">Shrani rezultat v seznam mojih matrik  </button>
                     </form>
-                    </p>
                     </div>
                     %end
                   </div>
@@ -174,15 +166,9 @@
                           </table>
                         </div>
                             %if produkt not in matrike:
-                            <div class="col-md-auto offset-md-4">
+                            <div class="col-md-auto">
                             <form action="/operacija-dve/2/{{ id_matrike1 }}/{{ id_matrike2 }}/" method="POST">
-                                                      <div class="form-check">
-                                  <input class="form-check-input" type="checkbox" value="" id="shrani">
-                                  <label class="form-check-label" for="shrani">
-                                    Shrani rezultat v seznam mojih matrik
-                                  </label>
-                                </div>
-                              <button type="submit" class="btn btn-light"> Shrani  </button>
+                            <button type="submit" class="btn btn-light">Shrani rezultat v seznam mojih matrik  </button>
                             </form>
                             </div>
                             %end

@@ -149,9 +149,8 @@ class Matrika:
                 for j in range(self.st_stolpcev):
                     k = i+j
                     brez_i_vrst = Matrika(np.delete(self.matrika, i, 0))
-                    brez_i_vrstt = brez_i_vrst.transponiraj()
                     brez_j_stolpca = Matrika(
-                        np.delete(brez_i_vrstt.matrika, j, 0))
+                        np.delete(brez_i_vrst.matrika, j, 1))
                     if k % 2 == 0:
                         poddet = brez_j_stolpca.det()
                     else:

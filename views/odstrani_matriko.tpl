@@ -6,7 +6,7 @@ Izberite matrike, ki jih želite odstraniti:
     % for id_matrike, matrika in enumerate(matrike):
       <div class="col">
       <div class="form-check">
-      <input class="form-check-input" type="checkbox" name="izbrane" value="{{ id_matrike }}" id="{{ id_matrike }}">
+      <input class="form-check-input" type="checkbox"  name="{{ id_matrike }}" id="{{ id_matrike }}">
       <label class="form-check-label" for="{{ id_matrike }}">   Matrika {{ id_matrike + 1 }}:
       <table class="matrika">
       % for vrstica in  matrika.spremeni_obliko_matrike():
