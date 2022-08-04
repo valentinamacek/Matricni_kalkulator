@@ -82,23 +82,21 @@ class Matrika:
     def potenciraj(self, n):
         try:
             float(n)
-            if float(n).is_integer():
-                g=float(n)
-                c=int(g)
-                if c>=0:
-                    if self.st_stolpcev == self.st_vrstic:
-                        k = c-1
-                        potencirana = self
-                        while k != 0:
-                            potencirana = potencirana * self
-                            k -= 1
-                        return potencirana
-                    else:
-                        return {"potenciraj":"Matrika mora biti kvadratna"}
-                else:
-                    return {"potenciraj":"Vnesi nenegativno celo stevilo"}
+            if not float(n).is_integer() or float(n)<=0:
+                return  {"potenciraj":"Vnesi naravno število"}
+            g=float(n)
+            c=int(g)
+            if self.st_stolpcev == self.st_vrstic:
+                k = c-1
+                potencirana = self
+                while k != 0:
+                    potencirana = potencirana * self
+                    k -= 1
+                return potencirana
+            else:
+                return {"potenciraj":"Matrika mora biti kvadratna"}
         except ValueError:
-            return {"potenciraj":"Vnesi nenegativno celo stevilo"}
+            return {"potenciraj":"Vnesi naravno število"}
 
     def mnozenje_s_skalar(self, skalar):
         try:

@@ -71,8 +71,8 @@
                    {{ napake["vsota"]}}
                  </div>
               %else:
-                  <div class="row justify-content-md-center gx-3 ">
-                    <div class="col-md-auto">
+                  <div class="row justify-content-md-center gx-4 ">
+                    <div class="col-md-auto align-self-start">
                         <table class="matrika">                                     
                         % for vrstica in  matrika1.spremeni_obliko_matrike(): 
                             <tr>
@@ -83,8 +83,8 @@
                         % end
                         </table>
                     </div>
-                   <div class="col-sm-auto justify-content-sm-center"> + </div>
-                   <div class="col-md-auto">
+                   <div class="col-sm-auto align-self-center"> + </div>
+                   <div class="col-md-auto align-self-start">
                       <table class="matrika"> 
                             % for vrstica in  matrika2.spremeni_obliko_matrike():
                                 <tr>
@@ -95,8 +95,8 @@
                             % end
                             </table>
                     </div>
-                    <div class="col-sm-auto justify-content-sm-center"> = </div>
-                    <div class="col-md-auto">
+                    <div class="col-sm-auto align-self-center"> = </div>
+                    <div class="col-md-auto align-self-start">
                       <table class="matrika"> 
                             % for vrstica in  vsota.spremeni_obliko_matrike():
                                 <tr>
@@ -129,20 +129,24 @@
                     {{ napake["produkt"] }}
                   </div>
                   %else:
-                      <div class="row justify-content-md-center gx-3">
-                        <div class="col-md-auto ">
-                            <table class="matrika">                                     
-                              % for vrstica in  matrika1.spremeni_obliko_matrike(): 
-                                  <tr>
-                                  % for element in vrstica:
-                                  <td>    {{ element }}  </td>
-                                  % end
-                                  </tr>
-                              % end
-                            </table>
-                        </div>
-                        <div class="col-sm-auto justify-content-sm-center "> * </div>
+                      <div class="row justify-content-md-center gx-4">
                         <div class="col-md-auto">
+                         <div class="row gx-4">
+                          <div class="col-md-auto align-self-start">
+                              <table class="matrika">                                     
+                                % for vrstica in  matrika1.spremeni_obliko_matrike(): 
+                                    <tr>
+                                    % for element in vrstica:
+                                    <td>    {{ element }}  </td>
+                                    % end
+                                    </tr>
+                                % end
+                              </table>
+                          </div>
+                          <div class="col-sm-auto align-self-center"> * </div>
+                          </div>
+                        </div>
+                        <div class="col-md-auto ">
                           <table class="matrika"> 
                           % for vrstica in  matrika2.spremeni_obliko_matrike():
                               <tr>
@@ -153,17 +157,21 @@
                           % end
                           </table>
                         </div>
-                        <div class="col-sm-auto  justify-content-sm-center"> = </div>
-                        <div class="col-md-auto ">
-                          <table class="matrika"> 
-                            % for vrstica in  produkt.spremeni_obliko_matrike():
-                                <tr>
-                                % for element in vrstica:
-                                <td>    {{ element }}  </td>
-                                % end
-                                </tr>
-                            % end
-                          </table>
+                        <div class="col-md-auto">
+                         <div class="row gx-4">
+                          <div class="col-sm-auto  align-self-center"> = </div>
+                          <div class="col-md-auto align-self-start">
+                            <table class="matrika"> 
+                              % for vrstica in  produkt.spremeni_obliko_matrike():
+                                  <tr>
+                                  % for element in vrstica:
+                                  <td>    {{ element }}  </td>
+                                  % end
+                                  </tr>
+                              % end
+                            </table>
+                          </div>
+                          </div>
                         </div>
                             %if produkt not in matrike:
                             <div class="col-md-auto">

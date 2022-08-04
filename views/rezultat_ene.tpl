@@ -54,34 +54,69 @@
           % for operacija in operacije:
          <button type="button" data-bs-toggle="collapse" data-bs-target="#{{ operacija }}_rezultat" aria-expanded="false" aria-controls="{{ operacija }}_rezultat" class="btn btn-outline-primary" >{{operacija.capitalize()}}</button>
           %end
-        %if stopnja!='p':
+        %if stopnja=='p' and rezultat_potenciranja=='':
+            %if skalar!='':
+                <form method="POST" action="/operacija-ena/0/{{id_matrike_izbrana}}/n/{{skalar}}/">
+                <div class="input-group">
+                <input type="text"  name="stopnja_potence"  placeholder="Stopnja potence" size="2"  >
+                <button type="submit" class="btn btn-outline-primary btn-md" name="operacija" value="potenciraj" >Potenciraj</button>
+                </div>
+                </form>
+            %else:
+                <form method="POST" action="/operacija-ena/0/{{id_matrike_izbrana}}/n/s/">
+                <div class="input-group">
+                <input type="text"  name="stopnja_potence"  placeholder="Stopnja potence" size="2"  >
+                <button type="submit" class="btn btn-outline-primary btn-md" name="operacija" value="potenciraj" >Potenciraj</button>
+                </div>
+                </form>
+            %end
+         %else:
+          %if stopnja!='':
           <div class="input-group">
-            <input type="text"  name="stopnja_potence"  placeholder="Stopnja potence" size="2" value={{ stopnja }} readonly>
+            <input type="text"  name="stopnja_potence"  placeholder="Stopnja potence"  size="2" value={{ stopnja }}  readonly>
             <button type="button" class="btn btn-outline-primary btn-md " data-bs-toggle="collapse" data-bs-target="#potenciraj_rezultat" aria-controls="potenciraj_rezultat" >Potenciraj</button>
             </div>
-        %else:
-        <form method="POST" action="/operacija-ena/0/{{id_matrike_izbrana}}/n/{{skalar}}/">
-        <div class="input-group">
-        <input type="text"  name="stopnja_potence"  placeholder="Stopnja potence" size="2"  >
-        <button type="submit" class="btn btn-outline-primary btn-md" name="operacija" value="potenciraj" >Potenciraj</button>
-        </div>
-        </form>
+          %else:
+          <div class="input-group">
+            <input type="text"  name="stopnja_potence"  placeholder="Stopnja potence"  size="2"  readonly>
+            <button type="button" class="btn btn-outline-primary btn-md " data-bs-toggle="collapse" data-bs-target="#potenciraj_rezultat" aria-controls="potenciraj_rezultat" >Potenciraj</button>
+            </div>
+          %end
         %end
-        %if skalar!='s':
-        <div class="input-group">
-        <input type="text" name="zeljen_skalar"  placeholder="Skalar"  size="2" value={{ skalar }} readonly>  
-        <button type="button" class="btn btn-outline-primary btn-md" data-bs-toggle="collapse" data-bs-target="#mnozenje_s_skalar_rezultat" aria-controls="mnozenje_s_skalar_rezultat">
-        Pomnoži
-        </button>
+        %if skalar=='s' and rezultat_mnozenjas=='':
+          %if stopnja!='':
+            <form method="POST" action="/operacija-ena/0/{{id_matrike_izbrana}}/{{stopnja}}/n/">
+            <div class="input-group">
+            <input type="text" name="zeljen_skalar"  placeholder="Skalar"  size="2">  
+            <button type="submit" class="btn btn-outline-primary btn-md" name="operacija" value="mnozenje_s_skalar">
+            Pomnoži
+            </button>
+            </div> 
+            </form>
+          %else:
+             <form method="POST" action="/operacija-ena/0/{{id_matrike_izbrana}}/p/n/">
+            <div class="input-group">
+            <input type="text" name="zeljen_skalar"  placeholder="Skalar"  size="2">  
+            <button type="submit" class="btn btn-outline-primary btn-md" name="operacija" value="mnozenje_s_skalar">
+            Pomnoži
+            </button>
+            </div> 
+            </form>
+          %end
         %else:
-        <form method="POST" action="/operacija-ena/0/{{id_matrike_izbrana}}/{{stopnja}}/n/">
-        <div class="input-group">
-        <input type="text" name="zeljen_skalar"  placeholder="Skalar"  size="2">  
-        <button type="submit" class="btn btn-outline-primary btn-md" name="operacija" value="mnozenje_s_skalar">
-        Pomnoži
-        </button>
-        </div> 
-        </form>
+           %if skalar!='':
+            <div class="input-group">
+            <input type="text" name="zeljen_skalar"  placeholder="Skalar"  size="2" value={{ skalar }} readonly>  
+            <button type="button" class="btn btn-outline-primary btn-md" data-bs-toggle="collapse" data-bs-target="#mnozenje_s_skalar_rezultat" aria-controls="mnozenje_s_skalar_rezultat">
+            Pomnoži
+            </button>
+           %else:
+            <div class="input-group">
+            <input type="text" name="zeljen_skalar"  placeholder="Skalar"  size="2"  readonly>  
+            <button type="button" class="btn btn-outline-primary btn-md" data-bs-toggle="collapse" data-bs-target="#mnozenje_s_skalar_rezultat" aria-controls="mnozenje_s_skalar_rezultat">
+            Pomnoži
+            </button>
+          %end
         %end
         </div>
          </p>
@@ -93,8 +128,10 @@
          <div class="col">
             <div class="collapse multi-collapse" id="transponiraj_rezultat">
                 <div class="card card-body">
-                    <div class="row justify-content-md-center gx-3">
-                        <div class="col-md-auto">
+                    <div class="row justify-content-md-center gx-4">
+                      <div class="col-md-auto">
+                      <div class="row gx-2">
+                        <div class="col-md-auto align-self-start">
                         <table class="matrika">                                    
                             % for vrstica in  matrika_izbrana.spremeni_obliko_matrike(): 
                                 <tr>
@@ -105,8 +142,12 @@
                             % end
                         </table>
                         </div>
-                        <div class="col-sm-auto"> T </div>
-                        <div class="col-sm-auto justify-content-sm-center"> = </div>
+                        <div class="col-sm-auto align-self-start"> T </div>
+                        <div class="col-sm-auto align-self-center">
+                         =
+                        </div>
+                        </div>
+                        </div>
                         <div class="col-md-auto">
                         <table class="matrika"> 
                             % for vrstica in  transponirana.spremeni_obliko_matrike():
@@ -288,7 +329,7 @@
         </div>
         </div>
         </div>
-        %if stopnja!='p':
+        %if stopnja!='p' or (stopnja=='p' and rezultat_potenciranja !=''):
         <div class="row">
          <div class="col">
             <div class="collapse show multi-collapse" id="potenciraj_rezultat">
@@ -345,7 +386,7 @@
           </div>
         </div>
         %end
-        %if skalar!='s':
+        %if skalar!='s' or (skalar=='s' and rezultat_mnozenjas!= ''):
         <div class="row">
                 <div class="col">
                      <div class="collapse show multi-collapse" id="mnozenje_s_skalar_rezultat">

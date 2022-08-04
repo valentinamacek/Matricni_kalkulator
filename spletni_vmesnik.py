@@ -4,6 +4,7 @@ from model import Stanje, Matrika
 import numpy as np
 
 SIFRIRNI_KLJUC = "To je skrivnost"
+OPERACIJE=["transponiraj", "prirejenka", "inverz", "det", "sled"]
 
 def ime_uporabnikove_datoteke(uporabnisko_ime):
     return f"stanja_uporabnikov/{uporabnisko_ime}.json"
@@ -152,10 +153,6 @@ def operacija_dve(stanje_r, id_matrike1, id_matrike2):
         id_matrike1=id_matrike1,id_matrike2=id_matrike2, matrike=stanje.matrike, operacije=OPERACIJE, napake=napake)
     
 
-
-OPERACIJE=["transponiraj", "prirejenka", "inverz", "det", "sled"]
-
-
 @bottle.post("/operacija-ena/<stanje_r:int>/<id_matrike>/<stopnja>/<skalar>/")
 def operacija_ena(stanje_r, id_matrike, stopnja, skalar):
     stanje=stanje_trenutnega_uporabnika()
@@ -206,12 +203,10 @@ def operacija_ena(stanje_r, id_matrike, stopnja, skalar):
                     stanje.dodaj_matriko(rezultat_potenciranja)
                     shrani_stanje_trenutnega_uporabnika(stanje)
     else:
-        rezultat_potenciranja=""
+          rezultat_potenciranja=''
     if skalar!='s':
         if skalar=='n':
            skalar = bottle.request.forms.getunicode("zeljen_skalar")
-           if skalar=='s':
-              napake.update({"skalar": "Vnesi realno število"})
         rezultat_mnozenjas = matrika.mnozenje_s_skalar(skalar)
         if isinstance(rezultat_mnozenjas, Matrika)==False:
             napake.update(rezultat_mnozenjas)
@@ -228,6 +223,8 @@ def operacija_ena(stanje_r, id_matrike, stopnja, skalar):
     rezultat_mnozenjas=rezultat_mnozenjas,
     id_matrike_izbrana=id_matrike, matrike=stanje.matrike, operacije=OPERACIJE, napake=napake)
 
- 
+@bottle.error(404)
+def error_404(error):
+    return "Ta stran ne obstaja!" 
             
 bottle.run(debug=True, reloader=True)

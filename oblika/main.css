@@ -2,12 +2,19 @@ h1 {
     color: rgb(0, 30, 255);
     text-align: center;
 }
-td {
-    text-align: center;
-}
 .matrika {
     position: relative;
-    border-spacing: 25px;
+    height: auto;
+    border-collapse:separate;
+    border-spacing:10px 0;
+    margin-left: -10px;
+    margin-right: -10px;
+}
+.simbol {
+    object-position: center;
+}
+td {
+    text-align: center;
 }
 .matrika:before, .matrika:after {
     content: "";
@@ -18,11 +25,11 @@ td {
     height: 100%;
 }
 .matrika:before {
-    left: -6px;
+    left: -2px;
     border-right: 0;
 }
 .matrika:after {
-    right: -6px;
+    right: -2px;
     border-left: 0;
 }
 .det {

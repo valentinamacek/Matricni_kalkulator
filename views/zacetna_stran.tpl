@@ -9,9 +9,9 @@
     </div>
     <ul>
     <div class="container ">
-     <div class="row row-cols-4 ">
+     <div class="row row-cols-5 g-3">
     % for id_matrike, matrika in enumerate(matrike):
-      <div class="col">
+      <div class="col-sm-4">
       <li>   Matrika {{ id_matrike + 1 }}:
       <table class="matrika">
       % for vrstica in  matrika.spremeni_obliko_matrike():
