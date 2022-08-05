@@ -10,6 +10,6 @@ Navodila:
 % if "matrika" in napake:
    {{ napake["matrika"] }}
 % end
-<button type="submit"> Dodaj </button>
+<button type="submit" class="btn btn-secondary"> Dodaj </button>
 </form>
 <a href="/" >Prekliči</a>

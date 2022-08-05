@@ -114,13 +114,8 @@ def odstrani_matriko_post():
         napake = {"izbor" : "Izberi vsaj eno matriko , ki jo želiš izbrisati, ali pritisni prekliči"}
         return  bottle.template("odstrani_matriko.tpl", matrike=stanje.matrike, napake=napake)
     else:
-        print(izbrane)
-        izbrane_matrike=[]
-        for id_izbrane_matrike in izbrane:
-            izbrana_matrika=stanje.matrike[id_izbrane_matrike]
-            izbrane_matrike.append(izbrana_matrika)
-        for izbrana_matrika in izbrane_matrike:
-            stanje.odstrani_matriko(izbrana_matrika)
+        for id_izbrane_matrike in izbrane[::-1]:
+            stanje.odstrani_matriko(stanje.matrike[id_izbrane_matrike])
         shrani_stanje_trenutnega_uporabnika(stanje)
         bottle.redirect("/")
         

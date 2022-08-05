@@ -1,17 +1,19 @@
 %rebase('base.tpl')
-    <h1>MATRIČNI KALKULATOR</h1>
-   
-    Tu je seznam vaših matrik:
-    <div class="float-end p-4">
+    <div class="d-flex justify-content-between align-items-end">
+    <div class="invisible"> </div>
+    <div class="p-4"> <h1>MATRIČNI KALKULATOR</h1> </div>
+    <div class="p-4">
     <form method="POST" action="/odjava/">
     <button type="submit" class="btn btn-outline-primary"> Odjavi se </button>
     </form>
     </div>
+    </div>
+    <div class="px-4"> Tu je seznam vaših matrik:</div>
     <ul>
     <div class="container ">
-     <div class="row row-cols-4">
+     <div class="row row-cols-auto">
     % for id_matrike, matrika in enumerate(matrike):
-      <div class="col">
+      <div class="col px-5 py-3">
       <li>   Matrika {{ id_matrike + 1 }}:
       <table class="matrika">
       % for vrstica in  matrika.spremeni_obliko_matrike():
@@ -29,7 +31,7 @@
     <div class="float-end p-4">  <a href="/">Začetna stran </a> </div> <br>
      </div>
     </div>
-      <div class="d-flex">
+      <div class="d-flex p-4">
        <div class="p-2"> 
         <select name="matrika1" class="custom-select" disabled>
         %for id_matrike in range(len(matrike)):
@@ -57,10 +59,12 @@
         </div>
         <div class="ml-auto p-2"><a href="/operacije-dve/"> Izberi drugi matriki </a></div>
         </div>
+         <div class="px-4 py-2">
           <p>
           <button type="button" data-bs-toggle="collapse" data-bs-target="#sestej_rezultat" aria-expanded="false" aria-controls="sestej_rezultat" class="btn btn-outline-primary">Seštej</button>
            <button type="button" data-bs-toggle="collapse" data-bs-target="#zmnozi_rezultat" aria-expanded="false" aria-controls="zmnozi_rezultat" class="btn btn-outline-primary">Zmnoži </button>
           </p>
+         </div>
        <div class="container">
         <div class="row">
          <div class="col">
@@ -108,10 +112,12 @@
                      </table>
                     </div>
                     %if vsota not in matrike:
+                    <div class="row justify-content-end">
                     <div class="col-md-auto">
                     <form action="/operacija-dve/1/{{ id_matrike1 }}/{{ id_matrike2 }}/" method="POST">
                     <button type="submit" class="btn btn-light">Shrani rezultat v seznam mojih matrik  </button>
                     </form>
+                    </div>
                     </div>
                     %end
                   </div>
@@ -174,10 +180,12 @@
                           </div>
                         </div>
                             %if produkt not in matrike:
+                            <div class="row justify-content-end">
                             <div class="col-md-auto">
                             <form action="/operacija-dve/2/{{ id_matrike1 }}/{{ id_matrike2 }}/" method="POST">
                             <button type="submit" class="btn btn-light">Shrani rezultat v seznam mojih matrik  </button>
                             </form>
+                            </div>
                             </div>
                             %end
                       </div>

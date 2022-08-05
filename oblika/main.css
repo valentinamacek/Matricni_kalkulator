@@ -1,17 +1,13 @@
 h1 {
-    color: rgb(0, 30, 255);
-    text-align: center;
+    color: rgb(41, 50, 114);
+    text-align: end;
 }
 .matrika {
     position: relative;
-    height: auto;
     border-collapse:separate;
     border-spacing:10px 0;
     margin-left: -10px;
     margin-right: -10px;
-}
-.simbol {
-    object-position: center;
 }
 td {
     text-align: center;
@@ -34,6 +30,10 @@ td {
 }
 .det {
     position: relative;
+    border-collapse:separate;
+    border-spacing:10px 0;
+    margin-left: -10px;
+    margin-right: -10px;
 }
 .det:before, .det:after {
     content: "";
@@ -54,4 +54,7 @@ td {
     border-left: 0;
     border-top: 0;
     border-bottom:0;
+}
+.vnos {
+    border-radius: 25px;
 }
