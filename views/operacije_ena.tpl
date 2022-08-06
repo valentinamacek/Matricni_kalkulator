@@ -1,12 +1,12 @@
 %rebase('base.tpl')
     <div class="d-flex justify-content-between align-items-end">
-    <div class="invisible"> </div>
-    <div class="p-4"> <h1>MATRIČNI KALKULATOR</h1> </div>
-    <div class="p-4">
-    <form method="POST" action="/odjava/">
-    <button type="submit" class="btn btn-outline-primary"> Odjavi se </button>
-    </form>
-    </div>
+      <div class="invisible"> </div>
+      <div class="p-4"> <h1>MATRIČNI KALKULATOR</h1> </div>
+      <div class="p-4">
+        <form method="POST" action="/odjava/">
+        <button type="submit" class="btn btn-outline-primary"> Odjavi se </button>
+        </form>
+      </div>
     </div>
     <div class="px-4"> Tu je seznam vaših matrik:</div>
     <ul>
@@ -27,6 +27,8 @@
       </li>
       </div>
     % end
+      </div>
+    </div>
     </ul>
   <div class="d-flex flex-row-reverse">
   <div class="p-4 ms-auto align-self-center">  <a href="/">Začetna stran </a> </div>
