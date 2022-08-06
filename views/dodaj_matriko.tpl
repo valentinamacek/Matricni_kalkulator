@@ -1,7 +1,8 @@
 %rebase('base.tpl')
+<div class="p-4">
 Navodila:
 <ul>
-<li>elementi matrike naj bodo realna števila</li>
+<li>elementi matrike naj bodo realna števila ( lahko napišeš cela števila, števila z decimalno piko, ulomke)</li>
 <li>za vsakim željenim elementom zapiši presledek </li>
 <li>Znak za novo vrstico je: <strong> ; </strong> </li> 
 </ul>
@@ -13,3 +14,4 @@ Navodila:
 <button type="submit" class="btn btn-secondary"> Dodaj </button>
 </form>
 <a href="/" >Prekliči</a>
+</div>
